@@ -230,35 +230,35 @@
             <i class="fas fa-plus fa-2x"></i><br>
             Upload Image
           </label>
-          <input type="file" id="input-file1" class="d-none">
+          <input type="file" name="filename" id="input-file1" class="d-none">
         </div>
         <div class="card p-5 mr-2">
           <label for="input-file2" class="btn btn-outline-secondary">
             <i class="fas fa-plus fa-2x"></i><br>
             Upload Image
           </label>
-          <input type="file" id="input-file2" class="d-none">
+          <input type="file" name="filename" id="input-file2" class="d-none">
         </div>
         <div class="card p-5 mr-2">
           <label for="input-file3" class="btn btn-outline-secondary">
             <i class="fas fa-plus fa-2x"></i><br>
             Upload Image
           </label>
-          <input type="file" id="input-file3" class="d-none">
+          <input type="file" name="filename" id="input-file3" class="d-none">
         </div>
         <div class="card p-5 mr-2">
           <label for="input-file4" class="btn btn-outline-secondary">
             <i class="fas fa-plus fa-2x"></i><br>
             Upload Image
           </label>
-          <input type="file" id="input-file4" class="d-none">
+          <input type="file" name="filename" id="input-file4" class="d-none">
         </div>
         <div class="card p-5 mr-2">
           <label for="input-file5" class="btn btn-outline-secondary">
             <i class="fas fa-plus fa-2x"></i><br>
             Upload Image
           </label>
-          <input type="file" id="input-file5" class="d-none">
+          <input type="file" name="filename" id="input-file5" class="d-none">
         </div>
       </div>
     </div>
