@@ -15,7 +15,7 @@
             <h1>Add Category</h1>
           </div>
           <div class="col-sm-3">
-           <a href="{{route('category.create')}}"> <button type="button" class="btn btn-block btn-primary btn-lg">Add New Customer</button></a>
+           <a href="{{route('category.create')}}"> <button type="button" class="btn btn-block btn-primary btn-lg">Add New Category</button></a>
            
           </div>
         </div>
