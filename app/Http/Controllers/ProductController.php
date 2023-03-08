@@ -93,19 +93,19 @@ class ProductController extends Controller
      
       );
         product::create($form_data);
-        $image_path = $request->file('filename')->store('public/images');
-    
+        $imageName = time().'.'.$request->filename->extension();  
+       
+        $image= $request->image->move(public_path('images'), $imageName);
         foreach ($productImages as $productImage) {
           // Generate a unique file name for the image
-          $fileName = uniqid().'.'.$productImage->getClientOriginalExtension();
-          
+         
           // Store the image in the "public/images" directory
           $productImage->storeAs('public/images', $fileName);
           
           // Create a new product image record in the database
           $productImageRecord = new ProductImage;
           $productImageRecord->product_id = $product->id;
-          $productImageRecord->file_name = $fileName;
+          $productImageRecord->file_name = $image;
           $productImageRecord->save();
       }
     
