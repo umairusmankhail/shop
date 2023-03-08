@@ -95,14 +95,19 @@ class ProductController extends Controller
         product::create($form_data);
         $image_path = $request->file('filename')->store('public/images');
     
-        // Create a new product image record
-        $product_image = new product_images([
-            'product_id' => $product->id,
-            'image_path' => $image_path,
-        ]);
-        
-        // Save the product image record to the database
-        $product_image->save();
+        foreach ($productImages as $productImage) {
+          // Generate a unique file name for the image
+          $fileName = uniqid().'.'.$productImage->getClientOriginalExtension();
+          
+          // Store the image in the "public/images" directory
+          $productImage->storeAs('public/images', $fileName);
+          
+          // Create a new product image record in the database
+          $productImageRecord = new ProductImage;
+          $productImageRecord->product_id = $product->id;
+          $productImageRecord->file_name = $fileName;
+          $productImageRecord->save();
+      }
     
   // Redirect to the same page with a success message
   return redirect(route('category'))->with('success', 'Category added successfully.');
