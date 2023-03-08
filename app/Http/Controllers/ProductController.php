@@ -49,7 +49,7 @@ class ProductController extends Controller
             'thickness_unit' => 'required', 
             'add_element' => 'required', 
             'description' => 'required', 
-         
+            'filename' => 'required|image|mimes:jpeg,png,jpg,JPG,gif,svg|max:2048',
         ]);
    
  
@@ -93,7 +93,17 @@ class ProductController extends Controller
      
       );
         product::create($form_data);
-      
+        $image_path = $request->file('filename')->store('public/images');
+    
+        // Create a new product image record
+        $product_image = new product_images([
+            'product_id' => $product->id,
+            'image_path' => $image_path,
+        ]);
+        
+        // Save the product image record to the database
+        $product_image->save();
+    
   // Redirect to the same page with a success message
   return redirect(route('category'))->with('success', 'Category added successfully.');
 }
