@@ -274,10 +274,10 @@
           
         <!-- /.card -->
 <!--end row-->
-<div class="col-md-4">
-                <button type="submit" class="btn btn-block btn-primary btn-lg">Submit</button>
+<div class="col-md-3">
+                <button type="submit" class="btn btn-block btn-primary">Submit</button>
                 </div>
   </form>
 
 
-@stop
+@endsection
