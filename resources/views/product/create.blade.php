@@ -219,6 +219,61 @@
     </div>
   </div>
 </div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="form-group">
+      <label for="input-files">Images</label>
+      <div class="d-flex">
+        <div class="card p-5 mr-2">
+          <label for="input-file1" class="btn btn-outline-secondary">
+            <i class="fas fa-plus fa-2x"></i><br>
+            Upload Image
+          </label>
+          <input type="file" id="input-file1" class="d-none">
+        </div>
+        <div class="card p-5 mr-2">
+          <label for="input-file2" class="btn btn-outline-secondary">
+            <i class="fas fa-plus fa-2x"></i><br>
+            Upload Image
+          </label>
+          <input type="file" id="input-file2" class="d-none">
+        </div>
+        <div class="card p-5 mr-2">
+          <label for="input-file3" class="btn btn-outline-secondary">
+            <i class="fas fa-plus fa-2x"></i><br>
+            Upload Image
+          </label>
+          <input type="file" id="input-file3" class="d-none">
+        </div>
+        <div class="card p-5 mr-2">
+          <label for="input-file4" class="btn btn-outline-secondary">
+            <i class="fas fa-plus fa-2x"></i><br>
+            Upload Image
+          </label>
+          <input type="file" id="input-file4" class="d-none">
+        </div>
+        <div class="card p-5 mr-2">
+          <label for="input-file5" class="btn btn-outline-secondary">
+            <i class="fas fa-plus fa-2x"></i><br>
+            Upload Image
+          </label>
+          <input type="file" id="input-file5" class="d-none">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+              <!-- /.col -->
+        
+              <!-- /.col -->
+        
+            <!-- /.row -->
+          
+        <!-- /.card -->
+<!--end row-->
 <div class="col-md-4">
                 <button type="submit" class="btn btn-block btn-primary btn-lg">Submit</button>
                 </div>
