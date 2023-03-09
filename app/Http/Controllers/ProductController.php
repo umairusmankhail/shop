@@ -5,8 +5,92 @@ use App\Models\product;
 use Illuminate\Http\Request;
 use App\Models\product_images;
 use Illuminate\Support\Facades\DB;
+
+use Illuminate\Support\Facades\Storage;
 class ProductController extends Controller
 {
+  public function edit($id)
+{
+    $product = product::findOrFail($id);
+    $images = product_images::where('product_id', $id)->get();
+
+    return view('product.edit', compact('product', 'images'));
+}
+
+  public function update(Request $request, $id)
+  {
+      $product = Product::findOrFail($id);
+      $product->p_name = $request->input('p_name');
+      $product->item_no = $request->input('item_no');
+      $product->authorize = $request->input('authorize');
+      $product->category_id = $request->input('category_id');
+      $product->subcategory = $request->input('subcategory');
+      $product->size = $request->input('size');
+      $product->size_unit = $request->input('size_unit');
+      $product->weight = $request->input('weight');
+      $product->w_unit = $request->input('w_unit');
+      $product->color = $request->input('color');
+      $product->p_trem = $request->input('p_trem');
+      $product->currency = $request->input('currency');
+      $product->moq = $request->input('moq');
+      $product->moq_unit = $request->input('moq_unit');
+      $product->m_grade = $request->input('m_grade');
+      $product->price = $request->input('price');
+      $product->p_unit = $request->input('p_unit');
+      $product->p_qty = $request->input('p_qty');
+      $product->price_qty_unit = $request->input('price_qty_unit');
+      $product->g_w_kg = $request->input('g_w_kg');
+      $product->lenght = $request->input('lenght');
+      $product->height = $request->input('height');
+      $product->width = $request->input('width');
+      $product->m3ctn = $request->input('m3ctn');
+      $product->hs_code = $request->input('hs_code');
+      $product->in_pack = $request->input('in_pack');
+      $product->inn_pack_unit = $request->input('inn_pack_unit');
+      $product->mid_pack = $request->input('mid_pack');
+      $product->mid_pack_unit = $request->input('mid_pack_unit');
+      $product->big_pack = $request->input('big_pack');
+      $product->big_pack_unit = $request->input('big_pack_unit');
+      $product->thickness = $request->input('thickness');
+      $product->thickness_unit = $request->input('thickness_unit');
+      $product->add_element = $request->input('add_element');
+      $product->description = $request->input('description');
+      $product->save();
+  
+      if ($request->hasFile('images')) {
+          $images = $request->file('images');
+          foreach ($images as $image) {
+              $filename = $image->store('public/images');
+              $productImage = new ProductImage();
+              $productImage->product_id = $product->id;
+              $productImage->filename = str_replace('public/', '', $filename);
+              $productImage->save();
+          }
+      }
+  
+      return redirect()->route('product-index')->with('success', 'Product updated successfully.');
+  }
+  
+  public function destroy($id)
+  {
+      $product = product::findOrFail($id);
+      $images = product_images::where('product_id', $product->id)->get();
+    
+      foreach ($images as $image) {
+          Storage::delete('public/' . $image->filename);
+          $image->delete();
+      }
+    
+      $product->delete();
+    
+      return redirect()->route('product-index')->with('success', 'Product and images deleted successfully.');
+  }
+  
+
+
+
+
+
   public function index(){
     $product =product::with('product')->get();
     return view('product.index')->with(['product' => $product]);

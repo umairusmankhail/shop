@@ -46,8 +46,14 @@ Route::middleware([
  
      //Product Route
      Route::get('/product', [ProductController::class, 'create'])->name('product');
-     Route::get('/product-index', [ProductController::class, 'index'])->name('product.index');
+     Route::get('/product-index', [ProductController::class, 'index'])->name('product-index');
      Route::post('/product/store', [ProductController::class, 'store'])->name('product.store');
+     // Display edit form
+Route::get('/products/{id}/edit', [ProductController::class, 'edit'])->name('products.edit');
+
+// Update product and images
+Route::put('/products/{id}', [ProductController::class,'update'])->name('product.update');
+Route::delete('/products/{id}', [ProductController::class,'destroy'])->name('products.destroy');
 
      
 
