@@ -105,7 +105,7 @@ class ProductController extends Controller
           // Create a new product image record in the database
           $productImageRecord = new ProductImage;
           $productImageRecord->product_id = $product->id;
-          $productImageRecord->file_name = $image;
+          $productImageRecord->file_name = $imageName;
           $productImageRecord->save();
       }
     

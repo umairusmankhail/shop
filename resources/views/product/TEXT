@@ -52,3 +52,94 @@
           
         <!-- /.card -->
 <!--end row-->
+
+
+
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class category extends Model
+{
+    public function category()
+    {
+        return $this->hasmany(sub_category::class, 'category_id');
+    }
+    use HasFactory;
+
+
+           
+    
+public function edit($id)
+{
+    $category =category::with('category')->find($id);;
+    
+    return view('category.edit', compact('category'));
+}
+@extends('app')
+@section('content')
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Add Customer</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Customer Form</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <!-- SELECT2 EXAMPLE -->
+        <div class="card card-default">
+       
+          <!-- /.card-header -->
+  <!-- Category form -->
+<form action="{{ route('category-update', $category->id) }}" method="post">
+    @csrf
+    @method('put')
+    <label for="category-name">Category name:</label>
+    <input type="text" name="cat_name" id="category-name" value="{{ $category['cat_name'] }}">
+    <button type="submit">Update</button>
+</form>
+
+<!-- Subcategory form -->
+<form method="POST" action="{{ route('subcategory-update', $category->id) }}">
+    @csrf
+    @method('put')
+    <div class="form-group">
+        <label>Category</label>
+        <select class="form-control select2" name="category_id" value="" style="width: 100%;">
+            <option value="">Select a Category</option>
+            @foreach($category as $categories)
+                <option value="{{ $categories->id}}" @if($categories->id == $subcategory->category_id) selected @endif>{{ $categories->cat_name }}</option>
+            @endforeach
+        </select>
+    </div>
+    <!-- /.form-group -->
+    <div class="form-group">
+        <label>Sub Category</label>
+        <input type="text" class="form-control" value="{{$subcategory->sub_name}}" placeholder="Sub Category name" name="sub_name">
+    </div> <!-- /.form-group -->
+    <button type="submit" class="btn btn-block btn-primary btn-lg">Submit</button>
+</form>
+
+          </div>
+          <!-- /.card-body -->
+       
+        </div>
+        <!-- /.card -->
+<!--end row-->
+@stop

@@ -11,5 +11,6 @@ class category extends Model
     {
         return $this->hasmany(sub_category::class);
     }
+    protected $fillable=['cat_name'];
     use HasFactory;
 }

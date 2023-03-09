@@ -36,20 +36,28 @@
       <tr>
           <th>Category</th>
           <th>SubCategory</th>
-
+          <th> action</th>
         
       </tr>
   </thead>
   <tbody>
   @foreach ($category as $categories)
     <tr>
-      <td rowspan="{{ count($categories->category) + 1 }}">{{ $categories->cat_name }}</td>
-    </tr>
+      <td rowspan="{{ count($categories->category) + 1 }}">{{ $categories->cat_name }}</td></tr>
+      <td>
     @foreach($categories->category as $sub)
       <tr>
         <td>{{ $sub->sub_name }}</td>
-      </tr>
+       
+                 
+
+              
+       
+    
+              
+    
     @endforeach
+   
   @endforeach
   </tbody>
 </table>

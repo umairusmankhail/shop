@@ -1,46 +1,34 @@
-@extends('app')
-@push('css')
-   <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
-    <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Laravel Datatables Yajra Server Side</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" />
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
-  @endpush
-@section('content')
- 
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-9">
-            <h1>Add Customer</h1>
-          </div>
-          <div class="col-sm-3">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-12 table-responsive">
+        <br />
+        <h3 align="center">Laravel 9 CRUD Datatables Yajra Server Side (Create, Read, Upate and Delete) with Bootstrap 5 Modal</h3>
+        <br />
+        <div align="right">
             <button type="button" name="create_record" id="create_record" class="btn btn-success"> <i class="bi bi-plus-square"></i> Add</button>
-       
-           
-          </div>
         </div>
-      </div><!-- /.container-fluid -->
-    </section>
-
-    <!-- Main content -->
-    <section class="content">
-        <div class="container-fluid">
-              
-    @if ($message = Session::get('success'))
-    <div class="alert alert-success">
-        <p>{{ $message }}</p>
-    </div>
-@endif
-           
+        <br />
             <table class="table table-striped table-bordered user_datatable"> 
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>address</th>
+                        <th>Category</th>
+                        <th>SubCategory</th>
+                     
                         <th width="180px">Action</th>
                     </tr>
                 </thead>
@@ -52,36 +40,38 @@
     <div class="modal fade" id="formModal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
         <div class="modal-dialog">
         <div class="modal-content">
-        <form method="post" action="{{ route('category.store') }}">
-    @csrf
-
-    <label for="category_name">Category Name:</label>
-    <input type="text" id="category_name" name="category_name" required>
-
-    <label for="subcategory_name">Subcategory Name:</label>
-    <input type="text" id="subcategory_name" name="subcategory_name">
-
-    <select id="category_id" name="category_id">
-        <option value="">Select a Category</option>
-        @foreach($categories as $category)
-            <option value="{{ $category->id }}">{{ $category->name }}</option>
-        @endforeach
-    </select>
-
-    <button type="submit" name="submit_type" value="category">Add Category</button>
-    <button type="submit" name="submit_type" value="subcategory">Add Subcategory</button>
-
-    @if ($errors->any())
-        <div>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
-</form>
+        <form method="post" id="sample_form" class="form-horizontal">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalLabel">Add New Record</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <span id="form_result"></span>
+                <div class="form-group">
+                    <label>Name : </label>
+                    <select class="form-control select2" name="category_id" id="category_id" style="width: 100%;">
+                    <option value="">Select a Category</option>
+          
+              <option value=""></option>
+   
+        </select>
+                </div>
+                <div class="form-group">
+                    <label>Email : </label>
+                    <input type="email" name="email" id="email" class="form-control" />
+                </div>
+                <div class="form-group editpass">
+                    <label>Password : </label>
+                    <input type="password" name="password" id="password" class="form-control" />
+                </div>
+                <input type="hidden" name="action" id="action" value="Add" />
+                <input type="hidden" name="hidden_id" id="hidden_id" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <input type="submit" name="action_button" id="action_button" value="Add" class="btn btn-info" />
+            </div>
+        </form>  
         </div>
         </div>
     </div>
@@ -108,10 +98,129 @@
  
 </div>
 </body>
-@push('js')
-  
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-  
-@endsection
+<script type="text/javascript">
+$(document).ready(function() {
+    var table = $('.user_datatable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: "{{ route('category') }}",
+        columns: [
+            {data: 'id', name: 'id'},
+            {data: 'cat_name', name: 'cat_name'},
+            {data: 'sub_categories.sub_name', name: 'sub_name'},
+            {data: 'action', name: 'action', orderable: false, searchable: false},
+        ]
+    });
+ 
+    $('#create_record').click(function(){
+        $('.modal-title').text('Add New Record');
+        $('#action_button').val('Add');
+        $('#action').val('Add');
+        $('#form_result').html('');
+ 
+        $('#formModal').modal('show');
+    });
+ 
+    $('#sample_form').on('submit', function(event){
+        event.preventDefault(); 
+        var action_url = '';
+ 
+        if($('#action').val() == 'Add')
+        {
+            action_url = "{{ route('category.store') }}";
+        }
+ 
+        if($('#action').val() == 'Edit')
+        {
+            action_url = "{{ route('category.update') }}";
+        }
+ 
+        $.ajax({
+            type: 'post',
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            url: action_url,
+            data:$(this).serialize(),
+            dataType: 'json',
+            success: function(data) {
+                console.log('success: '+data);
+                var html = '';
+                if(data.errors)
+                {
+                    html = '<div class="alert alert-danger">';
+                    for(var count = 0; count < data.errors.length; count++)
+                    {
+                        html += '<p>' + data.errors[count] + '</p>';
+                    }
+                    html += '</div>';
+                }
+                if(data.success)
+                {
+                    html = '<div class="alert alert-success">' + data.success + '</div>';
+                    $('#sample_form')[0].reset();
+                    $('#user_table').DataTable().ajax.reload();
+                }
+                $('#form_result').html(html);
+            },
+            error: function(data) {
+                var errors = data.responseJSON;
+                console.log(errors);
+            }
+        });
+    });
+ 
+    $(document).on('click', '.edit', function(event){
+        event.preventDefault(); 
+        var id = $(this).attr('id'); alert(id);
+        $('#form_result').html('');
+ 
+         
+ 
+        $.ajax({
+            url :"/category/edit/"+id+"/",
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            dataType:"json",
+            success:function(data)
+            {
+                console.log('success: '+data);
+                $('#category_id').val(data.result.cat_name);
+                $('#sub_name').val(data.result.sub_name);
+                $('#hidden_id').val(id);
+                $('.modal-title').text('Edit Record');
+                $('#action_button').val('Update');
+                $('#action').val('Edit'); 
+                $('.editpass').hide(); 
+                $('#formModal').modal('show');
+            },
+            error: function(data) {
+                var errors = data.responseJSON;
+                console.log(errors);
+            }
+        })
+    });
+ 
+    var user_id;
+ 
+    $(document).on('click', '.delete', function(){
+        user_id = $(this).attr('id');
+        $('#confirmModal').modal('show');
+    });
+ 
+    $('#ok_button').click(function(){
+        $.ajax({
+            url:"category/destroy/"+user_id,
+            beforeSend:function(){
+                $('#ok_button').text('Deleting...');
+            },
+            success:function(data)
+            {
+                setTimeout(function(){
+                $('#confirmModal').modal('hide');
+                $('#user_table').DataTable().ajax.reload();
+                alert('Data Deleted');
+                }, 2000);
+            }
+        })
+    });
+});
+</script>
+</html>
