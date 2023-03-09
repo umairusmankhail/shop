@@ -5,6 +5,11 @@
 
   @endpush
 @section('content')
+<style>
+  .form-row button {
+  margin-right: 10px;
+}
+  </style>
  
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -14,8 +19,10 @@
           <div class="col-sm-9">
             <h1>Add Category</h1>
           </div>
-          <div class="col-sm-3">
-           <a href="{{route('category.create')}}"> <button type="button" class="btn btn-block btn-primary btn-lg">Add New Category</button></a>
+          <div class="form-row justify-content-between">
+           <a href="{{route('category.create')}}"> <button type="button" class="btn btn-block btn-primary ">Add New Category</button></a>
+           <a href="{{route('category.edit')}}"> <button type="button" class="btn btn-block btn-primary ">Edit Category</button></a>
+           <a href="{{route('editsubcategory')}}"> <button type="button" class="btn btn-block btn-primary ">Edit SubCategory</button></a>
            
           </div>
         </div>
@@ -36,14 +43,14 @@
       <tr>
           <th>Category</th>
           <th>SubCategory</th>
-          <th> action</th>
+         
         
       </tr>
   </thead>
   <tbody>
   @foreach ($category as $categories)
     <tr>
-      <td rowspan="{{ count($categories->category) + 1 }}">{{ $categories->cat_name }}</td></tr>
+      <td rowspan="{{ count($categories->category) + 1 }}">{{ $categories->cat_name }}</td>
       <td>
     @foreach($categories->category as $sub)
       <tr>
@@ -59,6 +66,7 @@
     @endforeach
    
   @endforeach
+</tr>
   </tbody>
 </table>
 

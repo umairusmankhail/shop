@@ -17,6 +17,26 @@ class CategoryController extends Controller
     
         return view('category.index', compact('category'));
     }
+    public function edit(){
+        $category= category::get();
+        return view('category.edit')->with(['category' => $category]);
+    }
+    public function editcategory($id){
+        
+        $category = category::find($id);
+      
+        return view('category.editcategory')->with(['category' => $category]);
+    }
+
+    public function editsubcategory(){
+        $subcategory=sub_category::get();
+        return view('category.subcategoryedit')->with(['subcategory' => $subcategory]);
+    }
+    public function subcategoryedit($id){
+        $subcategory=sub_category::find($id);
+         return view('category.editsubcategory')->with(['subcategory' => $subcategory]);
+     }
+
 
     
     public function create(){
@@ -56,20 +76,14 @@ class CategoryController extends Controller
     // Redirect to the same page with a success message
     return redirect()->back()->with('success', 'Subcategory added successfully.');
 }
-       
+      
+
 
  
        
     
  
-    public function edit($id)
-    {
-        if(request()->ajax())
-        {
-            $data = User::findOrFail($id);
-            return response()->json(['result' => $data]);
-        }
-    }
+   
  
     public function update(Request $request)
     {
@@ -78,12 +92,6 @@ class CategoryController extends Controller
            
         );
  
-        $error = Validator::make($request->all(), $rules);
- 
-        if($error->fails())
-        {
-            return response()->json(['errors' => $error->errors()->all()]);
-        }
  
         $form_data = array(
             'cat_name'    =>  $request->cat_name,
@@ -91,8 +99,24 @@ class CategoryController extends Controller
  
         category::whereId($request->hidden_id)->update($form_data);
  
-        return response()->json(['success' => 'Data is successfully updated']);
+        return redirect()->back()->with('success', 'Subcategory added successfully.');
     }
+ 
+    public function subcategoryupdate(Request $request, $id)
+    {
+        $request->validate([
+           'sub_name' => 'required',
+        ]);
+     
+     
+        $subcategory = sub_category::find($id);
+       
+       $subcategory->sub_name=$request->sub_name;
+        $subcategory->save();
+         return redirect()->route('category')->with('success','home Has Been updated successfully');
+    }
+
+
  
     public function destroy($id)
     {

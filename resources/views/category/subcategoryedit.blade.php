@@ -1,18 +1,21 @@
 @extends('app')
+@push('style')
+   <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+  @endpush
 @section('content')
+ 
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1>Add Customer</h1>
+          <div class="col-sm-9">
+            <h1>Edit Category</h1>
           </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Customer Form</li>
-            </ol>
+          <div class="col-sm-3">
+       
           </div>
         </div>
       </div><!-- /.container-fluid -->
@@ -20,58 +23,79 @@
 
     <!-- Main content -->
     <section class="content">
-      <div class="container-fluid">
-        <!-- SELECT2 EXAMPLE -->
-        <div class="card card-default">
-       
-          <!-- /.card-header -->
-
-              <!-- /.col -->
+        <div class="container-fluid">
+              
+    @if ($message = Session::get('success'))
+    <div class="alert alert-success">
+        <p>{{ $message }}</p>
+    </div>
+@endif
+<table class="table">
+  <thead>
+      <tr>
+          <th>Category</th>
+     
+          <th> action</th>
         
-              <!-- /.col -->
-     {{$get=$_GET['id']}}
+      </tr>
+  </thead>
+  <tbody>
+  @foreach ($subcategory as $categories)
+    <tr>
+      <td>{{ $categories->sub_name }}</td></tr>
+      <td>
+          
 
-            <!-- /.row -->
-            <form method="POST" action="{{ route('subcategory-update', $subcategory->id) }}">
-                @csrf
-                @method('put')
-            <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label>Category</label>
-                   
-                    <select class="form-control select2" name="category_id" value="" style="width: 100%;">
-                    <option value="">{{$subcategory->cat_name}}</option>
-           @foreach($subcategory as $categories)
-              <option value="{{ $categories->$get }}">{{ $categories->cat_name }}</option>
-        @endforeach
-
-        </select>
-                        
-                      
-                   
-                  </div>
-                  <!-- /.form-group -->
-               
-                <!-- /.col -->
-                <div class="col-md-6">
-                  <div class="form-group">
-                
-                      <label>Sub Category</label>
-                      <input type="text" class="form-control" value="{{$categories->sub_name}}"  name="sub_name">
-                     
-                    </div> <!-- /.form-group -->
-                   
-                </div>
-                <div class="col-md-4">
-                <button type="submit" class="btn btn-block btn-primary btn-lg">Submit</button>
-                </div>
-
-            </form>
-          </div>
-          <!-- /.card-body -->
+          <a class="btn btn-primary" href="{{ route('subcategory-edit',$categories->id) }}">Edit</a> 
        
-        </div>
-        <!-- /.card -->
-<!--end row-->
-@stop
+       
+
+         <a href="{{ route('subcategory-destroy',$categories->id) }}" class="btn btn-danger">Delete</a>
+     
+ </td>
+   
+ 
+       
+                 
+
+              
+       
+    
+              
+    
+
+   
+  @endforeach
+  </tbody>
+</table>
+
+</section>
+
+<!-- right col -->
+</div>
+<!-- /.row (main row) -->
+</div><!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+
+<!-- Control Sidebar -->
+<aside class="control-sidebar control-sidebar-dark">
+<!-- Control sidebar content goes here -->
+</aside>
+<!-- /.control-sidebar -->
+
+</div>
+<!-- ./wrapper -->
+
+
+
+
+
+@endsection
+
+
+
+<!-- jQuery -->

@@ -29,20 +29,26 @@ Route::middleware([
     })->name('dashboard');
    Route::get('/category', [CategoryController::class, 'index'])->name('category');
     Route::get('/create', [CategoryController::class, 'create'])->name('category.create');
-   
+    Route::get('/categoryedit', [CategoryController::class, 'edit'])->name('category.edit');
+    Route::get('/categoryedit', [CategoryController::class, 'edit'])->name('category.edit');
+    Route::get('/editsubcategory', [CategoryController::class, 'editsubcategory'])->name('editsubcategory');
+    Route::get('/category-destroy{id}',[CategoryController::class,'destroy'])->name('category-destroy');
+    Route::get('/subcategory-destroy{id}',[CategoryController::class,'destroy'])->name('subcategory-destroy');
+    Route::get('category-edit/{id}',[CategoryController::class,'editcategory'])->name('edit-category');
+    Route::get('subcategory-edit/{id}',[CategoryController::class,'subcategoryedit'])->name('subcategory-edit');
+    Route::put('/category-update{id}',[CategoryController::class,'update'])->name('category-update');
+    
+    Route::put('/subcategory-update{id}',[CategoryController::class,'subcategoryupdate'])->name('subcategory-update');
+    
     Route::post('/subcategory/store', [CategoryController::class, 'storeSubcategory'])->name('subcategory.store');
     Route::post('/category/store', [CategoryController::class, 'store'])->name('category.store');
-
+    
  
      //Product Route
      Route::get('/product', [ProductController::class, 'create'])->name('product');
      Route::post('/product/store', [ProductController::class, 'store'])->name('product.store');
      
-     Route::get('/category-destroy{id}',[CategoryController::class,'destroy'])->name('category-destroy');
-     Route::get('category-edit/{id}',[CategoryController::class,'edit'])->name('edit-category');
-     Route::get('subcategory-edit/{id}',[CategoryController::class,'subcategoryedit'])->name('edit-subcategory');
-     Route::put('/category-update{id}',[CategoryController::class,'update'])->name('category-update');
-     Route::put('/subcategory-update{id}',[CategoryController::class,'subcategoryupdate'])->name('subcategory-update');
+
 
 
 
