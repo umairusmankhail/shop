@@ -30,7 +30,7 @@ Route::middleware([
    Route::get('/category', [CategoryController::class, 'index'])->name('category');
     Route::get('/create', [CategoryController::class, 'create'])->name('category.create');
     Route::get('/categoryedit', [CategoryController::class, 'edit'])->name('category.edit');
-    Route::get('/categoryedit', [CategoryController::class, 'edit'])->name('category.edit');
+   
     Route::get('/editsubcategory', [CategoryController::class, 'editsubcategory'])->name('editsubcategory');
     Route::get('/category-destroy{id}',[CategoryController::class,'destroy'])->name('category-destroy');
     Route::get('/subcategory-destroy{id}',[CategoryController::class,'destroy'])->name('subcategory-destroy');
@@ -46,7 +46,9 @@ Route::middleware([
  
      //Product Route
      Route::get('/product', [ProductController::class, 'create'])->name('product');
+     Route::get('/product-index', [ProductController::class, 'index'])->name('product.index');
      Route::post('/product/store', [ProductController::class, 'store'])->name('product.store');
+
      
 
 

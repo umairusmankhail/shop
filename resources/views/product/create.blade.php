@@ -219,7 +219,6 @@
     </div>
   </div>
 </div>
-
 <div class="row">
   <div class="col-md-12">
     <div class="form-group">
@@ -230,40 +229,56 @@
             <i class="fas fa-plus fa-2x"></i><br>
             Upload Image
           </label>
-          <input type="file" name="images[]" id="input-file1" class="d-none">
+          <input type="file" name="images[]" id="input-file1" class="d-none" onchange="handleImageUpload(this)">
         </div>
         <div class="card p-5 mr-2">
           <label for="input-file2" class="btn btn-outline-secondary">
             <i class="fas fa-plus fa-2x"></i><br>
             Upload Image
           </label>
-          <input type="file" name="images[]" id="input-file2" class="d-none">
+          <input type="file" name="images[]" id="input-file2" class="d-none" onchange="handleImageUpload(this)">
         </div>
         <div class="card p-5 mr-2">
           <label for="input-file3" class="btn btn-outline-secondary">
             <i class="fas fa-plus fa-2x"></i><br>
             Upload Image
           </label>
-          <input type="file" name="images[]" id="input-file3" class="d-none">
+          <input type="file" name="images[]" id="input-file3" class="d-none" onchange="handleImageUpload(this)">
         </div>
         <div class="card p-5 mr-2">
           <label for="input-file4" class="btn btn-outline-secondary">
             <i class="fas fa-plus fa-2x"></i><br>
             Upload Image
           </label>
-          <input type="file" name="images[]" id="input-file4" class="d-none">
+          <input type="file" name="images[]" id="input-file4" class="d-none" onchange="handleImageUpload(this)">
         </div>
         <div class="card p-5 mr-2">
           <label for="input-file5" class="btn btn-outline-secondary">
             <i class="fas fa-plus fa-2x"></i><br>
             Upload Image
           </label>
-          <input type="file" name="images[]" id="input-file5" class="d-none">
+          <input type="file" name="images[]" id="input-file5" class="d-none" onchange="handleImageUpload(this)">
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+  function handleImageUpload(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+        var card = input.parentNode;
+        card.style.backgroundImage = 'url(' + e.target.result + ')';
+        card.style.backgroundSize = 'cover';
+      }
+
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+</script>
 
 
               <!-- /.col -->
