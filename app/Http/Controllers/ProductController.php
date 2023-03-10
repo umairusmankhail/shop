@@ -100,19 +100,16 @@ class ProductController extends Controller
   }
     public function create()
     {
-        $data['category'] = category::get(["cat_name", "id"]);
-        return view('product.create', $data);
+        $categories = Category::all();
+        return view('product.create')->with(['categories'=> $categories]);
     }
-    public function fetchState(Request $request)
-    {
-        $data['sub_category'] = sub_category::where("category_id",$request->category_id)->get(["sub_name", "id"]);
-        return response()->json($data);
-    }
-    public function fetchCity(Request $request)
-    {
-        $data['sub_category'] = sub_category::where("category_id",$request->category_id)->get(["sub_name", "id"]);
-        return response()->json($data);
-    }
+    public function getSubcategories($category_id)
+{
+    $subcategories = sub_category::where('category_id', $category_id)->select('id', 'sub_name')->get();
+
+    return response()->json($subcategories);
+}
+   
 
   public function store(Request $request)
     {

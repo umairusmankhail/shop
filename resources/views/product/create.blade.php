@@ -60,17 +60,23 @@
     <div class="form-group col-md-6">
  
     <label for="category">Category</label>
-    <select class="form-control" id="category" name="category_id">
-        <option value="">--Select--</option>
-        @foreach  ($category as $categories )
-            <option value="{{ $categories->id }}">{{ $categories->cat_name }}</option>
+    <select class="form-control" id="category" name="category">
+        <option value="">--Select Category--</option>
+        @foreach($categories as $category)
+            <option value="{{ $category->id }}">{{ $category->cat_name }}</option>
         @endforeach
     </select>
 </div>
 <div class="form-group col-md-6">
     <label for="subcategory">Subcategory</label>
+<<<<<<< Updated upstream
     <select id="subcategory" name="subcategory" class="form-control">
 </select>
+=======
+    <select class="form-control" id="subcategory" name="subcategory">
+       
+    </select>
+>>>>>>> Stashed changes
 </div>
   </div>
   <div class="form-row">
@@ -273,51 +279,30 @@
   }
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('#category').on('change', function () {
-                var idCountry = this.value;
-                $("#subcategory").html('');
-                $.ajax({
-                    url: "{{url('api/fetch-states')}}",
-                    type: "POST",
-                    data: {
-                        country_id: idCountry,
-                        _token: '{{csrf_token()}}'
-                    },
-                    dataType: 'json',
-                    success: function (result) {
-                        $('#subcategory').html('<option value="">Select Subcategory</option>');
-                        $.each(result.sub_category, function (key, value) {
-                            $("#subcategory").append('<option value="' + value
-                                .id + '">' + value.sub_name + '</option>');
-                        });
-                        $('#city-dd').html('<option value="">Select City</option>');
-                    }
-                });
+ 
+<script>
+    $('#category').on('change', function() {
+        var category_id = $(this).val();
+        if(category_id) {
+            $.ajax({
+                url: '{{ url('get-subcategories') }}/'+encodeURI(category_id),
+                type: "GET",
+                dataType: "json",
+                success:function(data) {
+                    $('#subcategory').empty();
+                    $('#subcategory').append('<option value="">--Select Subcategory--</option>');
+                    $.each(data, function(create, subcategory) {
+                        $('#subcategory').append('<option value="'+ subcategory.id +'">'+ subcategory.sub_name +'</option>');
+                    });
+                }
             });
-            $('#state-dd').on('change', function () {
-                var idState = this.value;
-                $("#subcategory").html('');
-                $.ajax({
-                    url: "{{url('api/fetch-cities')}}",
-                    type: "POST",
-                    data: {
-                        category_id: idState,
-                        _token: '{{csrf_token()}}'
-                    },
-                    dataType: 'json',
-                    success: function (res) {
-                        $('#subcategory').html('<option value="">Select City</option>');
-                        $.each(res.cities, function (key, value) {
-                            $("#city-dd").append('<option value="' + value
-                                .id + '">' + value.sub_name + '</option>');
-                        });
-                    }
-                });
-            });
-        });
-    </script>            <!-- /.col -->
+        } else {
+            $('#subcategory').empty();
+            $('#subcategory').append('<option value="">--Select Subcategory--</option>');
+        }
+    });
+</script>
+          <!-- /.col -->
         
               <!-- /.col -->
         
