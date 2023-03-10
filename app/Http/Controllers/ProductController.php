@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 use App\Models\product;
+use App\Models\sub_category;
+use App\Models\category;
 use Illuminate\Http\Request;
 use App\Models\product_images;
 use Illuminate\Support\Facades\DB;
-
+use Response;
+use Redirect;
 use Illuminate\Support\Facades\Storage;
 class ProductController extends Controller
 {
@@ -95,9 +98,21 @@ class ProductController extends Controller
     $product =product::with('product')->get();
     return view('product.index')->with(['product' => $product]);
   }
-  public function create(){
-    return view('product.create');
-  }
+    public function create()
+    {
+        $data['category'] = category::get(["cat_name", "id"]);
+        return view('product.create', $data);
+    }
+    public function fetchState(Request $request)
+    {
+        $data['sub_category'] = sub_category::where("category_id",$request->category_id)->get(["sub_name", "id"]);
+        return response()->json($data);
+    }
+    public function fetchCity(Request $request)
+    {
+        $data['sub_category'] = sub_category::where("category_id",$request->category_id)->get(["sub_name", "id"]);
+        return response()->json($data);
+    }
 
   public function store(Request $request)
     {

@@ -58,22 +58,21 @@
   </div>
     <div class="form-row">
     <div class="form-group col-md-6">
-      <label for="select1">Category</label>
-      <select class="form-control" id="selecth4" name="category_id">
+ 
+    <label for="category">Category</label>
+    <select class="form-control" id="category" name="category_id">
         <option value="">--Select--</option>
-        <option value="option1">Option 1</option>
-        <option value="option2">Option 2</option>
-        <option value="option3">Option 3</option>
-      </select>
-    </div>
-    <div class="form-group col-md-6">
-      <label for="select1">Sub Category</label>
-      <select class="form-control" id="select4" name="subcategory">
-        <option value="">--Select--</option>
-        <option value="option1">Option 1</option>
-        <option value="option2">Option 2</option>
-        <option value="option3">Option 3</option>
-      </select>
+        @foreach  ($category as $categories )
+            <option value="{{ $categories->id }}">{{ $categories->cat_name }}</option>
+        @endforeach
+    </select>
+</div>
+<div class="form-group col-md-6">
+    <label for="subcategory">Subcategory</label>
+    <select id="subcategory" name="subcategory" class="form-control">
+                        </select>
+</div>
+
     </div>
   </div>
   <div class="form-row">
@@ -279,58 +278,52 @@
     }
   }
 </script>
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-  const imageCards = document.querySelectorAll('.image-card');
-  const dFlex = document.querySelector('.d-flex');
-
-  imageCards.forEach(function(imageCard) {
-    imageCard.addEventListener('mousedown', function() {
-      this.classList.add('dragging');
-    });
-
-    imageCard.addEventListener('mouseup', function() {
-      this.classList.remove('dragging');
-    });
-  });
-
-  dFlex.addEventListener('mousedown', function() {
-    this.classList.add('sorting');
-  });
-
-  dFlex.addEventListener('mouseup', function() {
-    this.classList.remove('sorting');
-  });
-
-  dFlex.addEventListener('dragover', function(event) {
-    event.preventDefault();
-    const afterElement = getDragAfterElement(dFlex, event.clientX);
-    const draggable = document.querySelector('.dragging');
-    if (afterElement == null) {
-      dFlex.appendChild(draggable);
-    } else {
-      dFlex.insertBefore(draggable, afterElement);
-    }
-  });
-
-  function getDragAfterElement(container, clientX) {
-    const draggableElements = [...container.querySelectorAll('.image-card:not(.dragging)')];
-    return draggableElements.reduce(function(closest, child) {
-      const box = child.getBoundingClientRect();
-      const offset = clientX - box.left - box.width / 2;
-      if (offset < 0 && offset > closest.offset) {
-        return { offset: offset, element: child };
-      } else {
-        return closest;
-      }
-    }, { offset: Number.NEGATIVE_INFINITY }).element;
-  }
-});
-
-
-  </script>
-
-              <!-- /.col -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#category').on('change', function () {
+                var idCountry = this.value;
+                $("#subcategory").html('');
+                $.ajax({
+                    url: "{{url('api/fetch-states')}}",
+                    type: "POST",
+                    data: {
+                        country_id: idCountry,
+                        _token: '{{csrf_token()}}'
+                    },
+                    dataType: 'json',
+                    success: function (result) {
+                        $('#subcategory').html('<option value="">Select Subcategory</option>');
+                        $.each(result.sub_category, function (key, value) {
+                            $("#subcategory").append('<option value="' + value
+                                .id + '">' + value.sub_name + '</option>');
+                        });
+                        $('#city-dd').html('<option value="">Select City</option>');
+                    }
+                });
+            });
+            $('#state-dd').on('change', function () {
+                var idState = this.value;
+                $("#subcategory").html('');
+                $.ajax({
+                    url: "{{url('api/fetch-cities')}}",
+                    type: "POST",
+                    data: {
+                        category_id: idState,
+                        _token: '{{csrf_token()}}'
+                    },
+                    dataType: 'json',
+                    success: function (res) {
+                        $('#subcategory').html('<option value="">Select City</option>');
+                        $.each(res.cities, function (key, value) {
+                            $("#city-dd").append('<option value="' + value
+                                .id + '">' + value.sub_name + '</option>');
+                        });
+                    }
+                });
+            });
+        });
+    </script>            <!-- /.col -->
         
               <!-- /.col -->
         

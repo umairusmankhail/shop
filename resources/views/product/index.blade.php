@@ -15,7 +15,7 @@
             <h1>Edit Category</h1>
           </div>
           <div class="col-sm-3">
-          <a href="{{route('product')}}"> <button type="button" class="btn btn-block btn-primary ">Edit SubCategory</button></a>
+          <a href="{{ route('product') }}"> <button type="button" class="btn btn-block btn-primary ">Edit SubCategory</button></a>
           
           </div>
         </div>

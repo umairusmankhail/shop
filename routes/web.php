@@ -45,7 +45,13 @@ Route::middleware([
     
  
      //Product Route
-     Route::get('/product', [ProductController::class, 'create'])->name('product');
+     
+
+
+   
+Route::get('dependent-dropdown', [ProductController::class, 'create'])->name('product');
+Route::post('api/fetch-states', [ProductController::class, 'fetchState']);
+Route::post('api/fetch-cities', [ProductController::class, 'fetchCity']);
      Route::get('/product-index', [ProductController::class, 'index'])->name('product-index');
      Route::post('/product/store', [ProductController::class, 'store'])->name('product.store');
      // Display edit form
