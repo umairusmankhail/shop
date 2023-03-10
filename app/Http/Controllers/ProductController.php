@@ -194,23 +194,23 @@ class ProductController extends Controller
      
       );
         product::create($form_data);
-        $imageName = time().'.'.$request->filename->extension();  
-       
-        $image= $request->image->move(public_path('images'), $imageName);
-        foreach ($productImages as $productImage) {
-          // Generate a unique file name for the image
-         
-          // Store the image in the "public/images" directory
-          $productImage->storeAs('public/images', $fileName);
-          
-          // Create a new product image record in the database
-          $productImageRecord = new ProductImage;
-          $productImageRecord->product_id = $product->id;
-          $productImageRecord->file_name = $image;
-          $productImageRecord->save();
+      
+        $productId = DB::getPdo()->lastInsertId();
+      
+        foreach ($request->file('images') as $image) {
+          $filename = $image->getClientOriginalName();
+  
+          // Create new product image
+          $productImage = new product_images;
+          $productImage->product_id = $productId; // Set the product ID
+          $productImage->filename = $filename;
+          $productImage->save();
+  
+          // Save the image file
+          $image->storeAs('public/images', $filename);
       }
   
-      return redirect()->route('category')->with('success', 'Product created successfully.');
+      return redirect()->route('product-index')->with('success', 'Product created successfully.');
   }
 
 
