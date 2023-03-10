@@ -15,7 +15,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Add Product</h1>
+            <h4>Add Product</h4>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -29,7 +29,7 @@
 
     <!-- Main content -->
     <section class="content">
-      <div class="container-fluid">
+      <div class="container-fluid">  
         <!-- SELECT2 EXAMPLE -->
         <div class="card card-default">
        
@@ -70,10 +70,8 @@
 <div class="form-group col-md-6">
     <label for="subcategory">Subcategory</label>
     <select id="subcategory" name="subcategory" class="form-control">
-                        </select>
+</select>
 </div>
-
-    </div>
   </div>
   <div class="form-row">
     <div class="form-group col-md-4 mb-3">
@@ -167,7 +165,6 @@
   </div>
 </div>
 <div class="form-row">
-  
   <div class="form-group col-md-2 mb-3">
     <label for="input6">Inner Pack</label>
     <input type="text" class="form-control" id="input6" name="in_pack">
@@ -176,12 +173,12 @@
     <label for="input7">Inner Pack unit</label>
     <input type="text" class="form-control" id="input7" name="inn_pack_unit">
   </div>
-  <div class="form-group col-md-4 mb-3">
+  <div class="form-group col-md-2 mb-3">
     <label for="input5">Mid Pack</label>
     <input type="text" class="form-control " id="input5" name="mid_pack">
   </div>
   <div class="form-group col-md-2 mb-3">
-    <label for="input8">Mid Pack Unit/label>
+    <label for="input8">Mid Pack Unit</label>
     <input type="text" class="form-control" id="input8" name="mid_pack_unit">
   </div>
   <div class="form-group col-md-2 mb-3">
@@ -193,9 +190,6 @@
     <input type="text" class="form-control" id="input9" name="big_pack_unit">
   </div>
 </div>
-
-
-  
   
   <div class="form-row justify-content-between">
     <div class="form-group col-md-4 mb-3">
@@ -212,11 +206,11 @@
     </div>
   </div>
   <div class ="form-row">
-  <div class="form-group col-md-8 mb-3">
+  <div class="form-group col-md-12 mb-3">
       <label for="textarea1">Description</label>
       <textarea class="form-control" id="textarea1" name="description" rows="4"></textarea>
     </div>
-  </div>
+  
 </div>
 <div class="row">
   <div class="col-md-12">

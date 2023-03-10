@@ -16,16 +16,18 @@
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
-          <div class="col-sm-9">
-            <h1>Add Category</h1>
+          <div class="col-6">
+            <h4>Add Category</h4>
           </div>
-          <div class="form-row justify-content-between">
-           <a href="{{route('category.create')}}"> <button type="button" class="btn btn-block btn-primary ">Add New Category</button></a>
-           <a href="{{route('category.edit')}}"> <button type="button" class="btn btn-block btn-primary ">Edit Category</button></a>
-           <a href="{{route('editsubcategory')}}"> <button type="button" class="btn btn-block btn-primary ">Edit SubCategory</button></a>
-           
+          <!-- Button Grid start here -->
+          <div class="col-6">
+           <a href="{{route('category.create')}}"> <button type="button" class="btn btn-sm btn-primary ">Add New Category</button></a>
+           <a href="{{route('category.edit')}}"> <button type="button" class="btn btn-sm btn-primary ">Edit Category</button></a>
+           <a href="{{route('editsubcategory')}}"> <button type="button" class="btn btn-sm btn-primary">Edit SubCategory</button></a>
           </div>
-        </div>
+           <!-- Button Grid end here -->
+        
+          </div>
       </div><!-- /.container-fluid -->
     </section>
 
