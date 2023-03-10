@@ -42,7 +42,7 @@
   <tbody>
   @foreach ($subcategory as $categories)
     <tr>
-      <td>{{ $categories->sub_name }}</td></tr>
+      <td>{{ $categories->sub_name }}</td>
       <td>
           
 
@@ -66,6 +66,7 @@
 
    
   @endforeach
+</tr>
   </tbody>
 </table>
 

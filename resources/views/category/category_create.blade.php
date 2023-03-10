@@ -39,7 +39,7 @@
                 <div class="form-group">
                 
                 <div class="col-md-4">
-                <button type="submit" class="btn btn-block btn-primary btn-lg">Submit</button>
+                <button type="submit" class="btn btn-sm btn-primary btn-lg">Add Category</button>
                 </div>
             
                   </div><!-- /.form-group -->
@@ -82,7 +82,7 @@
                    
                 </div>
                 <div class="col-md-4">
-                <button type="submit" class="btn btn-block btn-primary btn-lg">Submit</button>
+                <button type="submit" class="btn btn-sm btn-primary btn-lg">Add Sub Category</button>
                 </div>
 
                 <!-- /.col -->
