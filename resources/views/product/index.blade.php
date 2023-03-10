@@ -12,7 +12,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-9">
-            <h4>Edit Category</h4>
+            <h4>Product Page</h4>
           </div>
           <div class="col-sm-3">
           <a href="{{ route('product') }}"> <button type="button" class="btn btn-sm btn-primary ">Add Product</button></a>
@@ -34,7 +34,7 @@
 <table class="table">
   <thead>
       <tr>
-          <th>Category</th>
+          <th>Product Name</th>
      
           <th> action</th>
         
