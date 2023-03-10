@@ -22,8 +22,7 @@
           <!-- Button Grid start here -->
           <div class="col-6">
            <a href="{{route('category.create')}}"> <button type="button" class="btn btn-sm btn-primary ">Add New Category</button></a>
-           <a href="{{route('category.edit')}}"> <button type="button" class="btn btn-sm btn-primary ">Edit Category</button></a>
-           <a href="{{route('editsubcategory')}}"> <button type="button" class="btn btn-sm btn-primary">Edit SubCategory</button></a>
+           <a href="{{route('category.edit')}}"> <button type="button" class="btn btn-sm btn-primary ">Edit Only Category</button></a>
           </div>
            <!-- Button Grid end here -->
         
@@ -41,36 +40,35 @@
     </div>
 @endif
 <table class="table">
-  <thead>
-      <tr>
-          <th>Category</th>
-          <th>SubCategory</th>
-         
-        
-      </tr>
-  </thead>
-  <tbody>
-  @foreach ($category as $categories)
-    <tr>
-      <td rowspan="{{ count($categories->category) + 1 }}">{{ $categories->cat_name }}</td>
-      <td>
-    @foreach($categories->category as $sub)
-      <tr>
-        <td>{{ $sub->sub_name }}</td>
-       
-                 
-
-              
-       
-    
-              
-    
-    @endforeach
-   
-  @endforeach
-</tr>
-  </tbody>
+    <thead>
+        <tr>
+            <th>Subcategory Name</th>
+            <th>Category Name</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach ($subcategories as $subcategory)
+            <tr>
+                <td>{{ $subcategory->sub_name }}</td>
+                <td>
+                @if ($subcategory->category)
+                        {{ $subcategory->category->cat_name }}
+                    @endif
+</td>
+                <td>
+                    <a href="{{ route('subcategory-edit', $subcategory->id) }}" class="btn btn-primary">Edit</a>
+                    <form action="{{ route('subcategory-destroy', $subcategory->id) }}" method="POST" style="display: inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        @endforeach
+    </tbody>
 </table>
+
 
 </section>
 

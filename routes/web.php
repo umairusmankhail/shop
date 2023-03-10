@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\DataTableAjaxCRUDController;
+use App\Http\Controllers\ProductImportController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,16 +28,25 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('home');
     })->name('dashboard');
+
+    
+    // category route
+
+
    Route::get('/category', [CategoryController::class, 'index'])->name('category');
     Route::get('/create', [CategoryController::class, 'create'])->name('category.create');
     Route::get('/categoryedit', [CategoryController::class, 'edit'])->name('category.edit');
-   
-    Route::get('/editsubcategory', [CategoryController::class, 'editsubcategory'])->name('editsubcategory');
+    Route::put('/category-update{id}',[CategoryController::class,'update'])->name('category-update');
+  
     Route::get('/category-destroy{id}',[CategoryController::class,'destroy'])->name('category-destroy');
-    Route::get('/subcategory-destroy{id}',[CategoryController::class,'destroy'])->name('subcategory-destroy');
+
+
+    // Subcategory Route
+    Route::delete('subcategory/{id}', [CategoryController::class, 'deletesubcategory'])->name('subcategory-destroy');
+    Route::get('/editsubcategory', [CategoryController::class, 'editsubcategory'])->name('editsubcategory');
+   
     Route::get('category-edit/{id}',[CategoryController::class,'editcategory'])->name('edit-category');
     Route::get('subcategory-edit/{id}',[CategoryController::class,'subcategoryedit'])->name('subcategory-edit');
-    Route::put('/category-update{id}',[CategoryController::class,'update'])->name('category-update');
     
     Route::put('/subcategory-update{id}',[CategoryController::class,'subcategoryupdate'])->name('subcategory-update');
     
@@ -49,7 +59,7 @@ Route::middleware([
 
 
    
-Route::get('dependent-dropdown', [ProductController::class, 'create'])->name('product');
+Route::get('product', [ProductController::class, 'create'])->name('product');
 Route::get('get-subcategories/{category_id}', [ProductController::class, 'getSubcategories'])->name('get-subcategories');
 
 
@@ -61,6 +71,11 @@ Route::get('/products/{id}/edit', [ProductController::class, 'edit'])->name('pro
 // Update product and images
 Route::put('/products/{id}', [ProductController::class,'update'])->name('product.update');
 Route::delete('/products/{id}', [ProductController::class,'destroy'])->name('products.destroy');
+
+Route::get('/import', [ProductImportController::class, 'showImportForm'])->name('import.form');
+Route::post('/import', [ProductImportController::class, 'import'])->name('import.products');
+
+
 
      
 

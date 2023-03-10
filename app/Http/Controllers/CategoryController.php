@@ -13,9 +13,9 @@ class CategoryController extends Controller
 {
     public function index(Request $request)
     {
-        $category =category::with('category')->get();
+        $subcategories = sub_category::with('category')->get();
     
-        return view('category.index', compact('category'));
+        return view('category.index', compact('subcategories'));
     }
     public function edit(){
         $category= category::get();
@@ -28,14 +28,10 @@ class CategoryController extends Controller
         return view('category.editcategory')->with(['category' => $category]);
     }
 
-    public function editsubcategory(){
-        $subcategory=sub_category::get();
-        return view('category.subcategoryedit')->with(['subcategory' => $subcategory]);
-    }
-    public function subcategoryedit($id){
-        $subcategory=sub_category::find($id);
-         return view('category.editsubcategory')->with(['subcategory' => $subcategory]);
-     }
+  
+   
+       
+     
 
 
     
@@ -59,23 +55,7 @@ class CategoryController extends Controller
         // Redirect to the same page with a success message
         return redirect()->back()->with('success', 'Category added successfully.');
     }
-    public function storeSubcategory(Request $request)
-{
-    // Validate the request data
-    $validatedData = $request->validate([
-        'category_id' => 'required',
-        'sub_name' => 'required',
-    ]);
 
-    // Create a new subcategory instance and save it to the database
-    $subcategory = new sub_category;
-    $subcategory->sub_name = $validatedData['sub_name'];
-    $subcategory->category_id = $validatedData['category_id'];
-    $subcategory->save();
-
-    // Redirect to the same page with a success message
-    return redirect()->back()->with('success', 'Subcategory added successfully.');
-}
       
 
 
@@ -102,19 +82,7 @@ class CategoryController extends Controller
         return redirect()->back()->with('success', 'Subcategory added successfully.');
     }
  
-    public function subcategoryupdate(Request $request, $id)
-    {
-        $request->validate([
-           'sub_name' => 'required',
-        ]);
-     
-     
-        $subcategory = sub_category::find($id);
-       
-       $subcategory->sub_name=$request->sub_name;
-        $subcategory->save();
-         return redirect()->route('category')->with('success','home Has Been updated successfully');
-    }
+  
 
 
  
@@ -123,4 +91,58 @@ class CategoryController extends Controller
         $data = category::findOrFail($id);
         $data->delete();
     }
+
+    // Function for Subcategory
+
+    public function subcategoryedit($id){
+        $subcategory = sub_category::findOrFail($id);
+        $category = Category::all();
+        return view('category.editsubcategory', compact('subcategory', 'category'));
+    }
+    public function storeSubcategory(Request $request)
+    {
+        // Validate the request data
+        $validatedData = $request->validate([
+            'category_id' => 'required',
+            'sub_name' => 'required',
+        ]);
+    
+        // Create a new subcategory instance and save it to the database
+        $subcategory = new sub_category;
+        $subcategory->sub_name = $validatedData['sub_name'];
+        $subcategory->category_id = $validatedData['category_id'];
+        $subcategory->save();
+    
+        // Redirect to the same page with a success message
+        return redirect()->back()->with('success', 'Subcategory added successfully.');
+    }   
+
+    public function subcategoryupdate(Request $request, $id)
+    {
+        $request->validate([
+           'sub_name' => 'required',
+        ]);
+     
+     
+        $subcategory = sub_category::findOrFail($id);
+        $subcategory->category_id = $request->input('category_id');
+       $subcategory->sub_name=$request->sub_name;
+        $subcategory->save();
+         return redirect()->route('category')->with('success','home Has Been updated successfully');
+    }
+
+
+    public function deletesubcategory($id)
+{
+    $subcategory = sub_category::findOrFail($id);
+
+    // delete any related data before deleting the subcategory
+    // for example, if there are product images associated with the subcategory, delete them first
+   
+    $subcategory->delete();
+
+    return redirect()->route('category.index')
+        ->with('success', 'Subcategory deleted successfully');
+}
+
 }

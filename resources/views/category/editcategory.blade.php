@@ -6,7 +6,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Add Customer</h1>
+            <h1>Edit Category</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -37,8 +37,8 @@
           
                 </div>
                 <!-- /.form-group -->
-                            <div class="col-md-2">
-                <button type="submit" class="btn btn-block btn-primary btn-lg">Submit</button>
+                            <div class="col-md-4">
+                <button type="submit" class="btn btn-block btn-primary ">Submit</button>
                 </div>
 
                 <!-- /.col -->

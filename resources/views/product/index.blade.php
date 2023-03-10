@@ -16,7 +16,8 @@
           </div>
           <div class="col-sm-3">
           <a href="{{ route('product') }}"> <button type="button" class="btn btn-sm btn-primary ">Add Product</button></a>
-          
+          <a href="{{ route('import.form') }}"><button type="button" class="btn btn-sm btn-primary ">Upload Product</button></a>
+
           </div>
         </div>
       </div><!-- /.container-fluid -->
