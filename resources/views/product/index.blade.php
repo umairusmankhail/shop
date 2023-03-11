@@ -12,13 +12,13 @@
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
-          <div class="col-sm-9">
+          <div class="col-sm-6">
             <h4>Product Page</h4>
           </div>
-          <div class="col-sm-3">
+          <div class="col-sm-6">
           <a href="{{ route('product') }}"> <button type="button" class="btn btn-sm btn-primary ">Add Product</button></a>
           <a href="{{ route('import.form') }}"><button type="button" class="btn btn-sm btn-primary ">Upload Product</button></a>
-          <button type="button" class="btn btn-danger" id="delete-selected">Delete Selected</button>
+          <button type="button" class="btn btn-sm btn-danger" id="delete-selected">Delete Selected</button>
           </div>
         </div>
       </div><!-- /.container-fluid -->

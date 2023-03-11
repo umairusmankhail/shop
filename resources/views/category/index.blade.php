@@ -57,11 +57,11 @@
                     @endif
 </td>
                 <td>
-                    <a href="{{ route('subcategory-edit', $subcategory->id) }}" class="btn btn-primary">Edit</a>
+                    <a href="{{ route('subcategory-edit', $subcategory->id) }}" class="btn btn-sm btn-primary">Edit</a>
                     <form action="{{ route('subcategory-destroy', $subcategory->id) }}" method="POST" style="display: inline;">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                     </form>
                 </td>
             </tr>
