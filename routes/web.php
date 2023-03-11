@@ -58,12 +58,12 @@ Route::middleware([
      
 
 
-   
 Route::get('product', [ProductController::class, 'create'])->name('product');
 Route::get('get-subcategories/{category_id}', [ProductController::class, 'getSubcategories'])->name('get-subcategories');
 
+Route::get('/product-index',[ProductController::class,'index'])->name('product-index');
+Route::get('/datatables/data', [ProductController::class, 'getDataForDatatables'])->name('product.data');
 
-     Route::get('/product-index', [ProductController::class, 'index'])->name('product-index');
      Route::post('/product/store', [ProductController::class, 'store'])->name('product.store');
      // Display edit form
 Route::get('/products/{id}/edit', [ProductController::class, 'edit'])->name('products.edit');
@@ -76,6 +76,7 @@ Route::get('/import', [ProductImportController::class, 'showImportForm'])->name(
 Route::post('/import', [ProductImportController::class, 'import'])->name('import.products');
 
 
+Route::delete('/products/delete-selected', [ProductController::class,'delete'])->name('products.deleteSelected');
 
      
 

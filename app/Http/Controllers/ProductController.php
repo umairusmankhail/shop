@@ -60,18 +60,31 @@ class ProductController extends Controller
       $product->description = $request->input('description');
       $product->save();
      
-      if ($request->hasFile('images')) {
-          $images = $request->file('images');
-          foreach ($images as $image) {
+    
+    
+    
+            if ($request->hasFile('video')) {
+                $video = $request->file('video');
+                $videoName = $video->getClientOriginalName();
+                $video->storeAs('public/videos', $videoName);
+            } else {
+                $videoName = null;
+            }
+            $images = $request->file('images');
+            if (isset($images)) {
+                foreach ($images as $image) {
+                    $imageName = $image->getClientOriginalName();
+         
               $filename = $image->store('public/images');
               $productImage = new ProductImage();
               $productImage->product_id = $product->id;
               $productImage->filename = str_replace('public/', '', $filename);
+              $productImage->video = str_replace('public/', '', $videoName);
         
               $productImage->save();
           }
-      }
-  
+      
+        }
       return redirect()->route('product-index')->with('success', 'Product updated successfully.');
   }
   
@@ -93,12 +106,57 @@ class ProductController extends Controller
 
 
 
+public function index(){
+    return view('product.index');
+}
+
+  public function getDataForDatatables()
+  {
+      $products = Product::with('product')->get();
+      
+      return datatables()->of($products)
+          ->addColumn('action', function($product) {
+            $button = '<button type="button" name="edit" id="'.$product->id.'" class="edit btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i>Edit</button>';
+                  $button .= '<form action="'.route("products.destroy", $product->id).'" method="POST" style="display: inline-block;">
+                        '.csrf_field().'
+                        '.method_field("DELETE").'
+                        <button type="submit" class="delete btn btn-danger btn-sm"><i class="bi bi-backspace-reverse-fill"></i>Delete</button>
+                      </form>';
+            return $button;
+        })
+          ->make(true);
+  
+  
+        
+    }
+    public function delete($id)
+    {
+        dd($id);
+    
+        /* try {
+            $product = product::findOrFail($id);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['success' => false]);
+        }
+    
+        $productImages = product_images::where('product_id', $id)->get();
+        foreach ($productImages as $productImage) {
+            Storage::delete($productImage->image_path);
+            $productImage->delete();
+        }
+        $product->delete();
+    
+        return response()->json(['success' => true]); */
+    }
+    
+
+  
 
 
-  public function index(){
-    $product =product::with('product')->get();
-    return view('product.index')->with(['product' => $product]);
-  }
+ 
+
+
+
     public function create()
     {
         $categories = Category::all();
@@ -197,23 +255,31 @@ class ProductController extends Controller
         product::create($form_data);
       
         $productId = DB::getPdo()->lastInsertId();
-        $video = $request->file('video') ;
-       $videos= $video->getClientOriginalName();
-        foreach ($request->file('images') as $image) {
-          $filename = $image->getClientOriginalName();
-  
-          // Create new product image
-          $productImage = new product_images;
-          $productImage->product_id = $productId; // Set the product ID
-          $productImage->filename = $filename;
-          $productImage->video = $videos;
-          $productImage->save();
-  
-          // Save the image file
-          $video->storeAs('public/videos', $videos);
-          $image->storeAs('public/images', $filename);
-      }
-  
+        if ($request->hasFile('video')) {
+            $video = $request->file('video');
+            $videoName = $video->getClientOriginalName();
+            $video->storeAs('public/videos', $videoName);
+        } else {
+            $videoName = null;
+        }
+        
+        $images = $request->file('images');
+        if (isset($images)) {
+            foreach ($images as $image) {
+                $imageName = $image->getClientOriginalName();
+        
+                // Create new product image
+                $productImage = new product_images;
+                $productImage->product_id = $productId; // Set the product ID
+                $productImage->filename = $imageName;
+                $productImage->video = $videoName;
+                $productImage->save();
+        
+                // Save the image file
+                $image->storeAs('public/images', $imageName);
+            }
+        }
+        
       return redirect()->route('product-index')->with('success', 'Product created successfully.');
   }
 
