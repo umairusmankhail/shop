@@ -143,3 +143,16 @@ public function edit($id)
         <!-- /.card -->
 <!--end row-->
 @stop
+
+
+
+
+<a class="btn btn-primary" href="{{ route('products.edit',$data->id) }}">Edit</a> 
+       
+       
+<form action="{{ route('products.destroy', ['id' => $data->id]) }}" method="POST">
+@csrf
+@method('DELETE')
+<button type="submit" class="btn btn-danger">Delete Product</button>
+
+
