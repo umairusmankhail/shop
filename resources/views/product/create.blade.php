@@ -217,35 +217,35 @@
     <div class="form-group">
       <label for="input-files">Images</label>
       <div class="d-flex">
-        <div class="card p-5 mr-2 image-card">
+        <div class="card p-5 mr-2 image-card" id="dropzone">
           <label for="input-file1" class="btn btn-outline-secondary">
             <i class="fas fa-plus fa-2x"></i><br>
             Upload Image
           </label>
           <input type="file" name="images[]" id="input-file1" class="d-none" onchange="handleImageUpload(this)">
         </div>
-        <div class="card p-5 mr-2 image-card">
+        <div class="card p-5 mr-2 image-card" id="card-2">
           <label for="input-file2" class="btn btn-outline-secondary">
             <i class="fas fa-plus fa-2x"></i><br>
             Upload Image
           </label>
           <input type="file" name="images[]" id="input-file2" class="d-none" onchange="handleImageUpload(this)">
         </div>
-        <div class="card p-5 mr-2 image-card">
+        <div class="card p-5 mr-2 image-card" id="card-3">
           <label for="input-file3" class="btn btn-outline-secondary">
             <i class="fas fa-plus fa-2x"></i><br>
             Upload Image
           </label>
           <input type="file" name="images[]" id="input-file3" class="d-none" onchange="handleImageUpload(this)">
         </div>
-        <div class="card p-5 mr-2 image-card">
+        <div class="card p-5 mr-2 image-card" id="card-4">
           <label for="input-file4" class="btn btn-outline-secondary">
             <i class="fas fa-plus fa-2x"></i><br>
             Upload Image
           </label>
           <input type="file" name="images[]" id="input-file4" class="d-none" onchange="handleImageUpload(this)">
         </div>
-        <div class="card p-5 mr-2 image-card">
+        <div class="card p-5 mr-2 image-card" id="card-5">
           <label for="input-file5" class="btn btn-outline-secondary">
             <i class="fas fa-plus fa-2x"></i><br>
             Upload Video
@@ -271,6 +271,80 @@
     }
   }
 </script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- include the jQuery UI library -->
+<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
+<script>
+
+
+$(document).ready(function() {
+    $('.d-flex').sortable({
+        items: '.image-card',
+        axis: 'x',
+        containment: 'parent'
+    });
+});
+
+  </script>
+
+<script>
+    $(function () {
+        // Make the dropzone a droppable area
+        $("#dropzone").on("dragover", function (event) {
+            event.preventDefault();
+            $(this).addClass("dragover");
+        });
+
+        $("#dropzone").on("dragleave", function (event) {
+            event.preventDefault();
+            $(this).removeClass("dragover");
+        });
+
+        $("#dropzone").on("drop", function (event) {
+            event.preventDefault();
+            $(this).removeClass("dragover");
+
+            // Get the dropped files
+            var files = event.originalEvent.dataTransfer.files;
+
+            // Loop through the dropped files
+            for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+
+                // Check if the dropped file is an image
+                if (file.type.match(/^image\//)) {
+                    // Create a new image element
+                    var img = $("<img>");
+
+                    // Set the source of the image to the dropped file
+                    img.attr("src", URL.createObjectURL(file));
+
+                    // Make the image draggable
+                    img.draggable({
+                        revert: "invalid",
+                        helper: "clone"
+                    });
+
+                    // Add the image to the dropzone
+                    $(this).append(img);
+                }
+            }
+        });
+
+        // Make the dropzone a droppable area
+        $("#dropzone").droppable({
+            drop: function (event, ui) {
+                // Get the dropped image
+                var droppedImg = ui.draggable;
+
+                // Add the image to the dropzone
+                $(this).append(droppedImg);
+            }
+        });
+    });
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
  
 <script>
