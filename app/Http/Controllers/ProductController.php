@@ -59,7 +59,7 @@ class ProductController extends Controller
       $product->add_element = $request->input('add_element');
       $product->description = $request->input('description');
       $product->save();
-  
+     
       if ($request->hasFile('images')) {
           $images = $request->file('images');
           foreach ($images as $image) {
@@ -67,6 +67,7 @@ class ProductController extends Controller
               $productImage = new ProductImage();
               $productImage->product_id = $product->id;
               $productImage->filename = str_replace('public/', '', $filename);
+        
               $productImage->save();
           }
       }
@@ -150,7 +151,7 @@ class ProductController extends Controller
             'thickness_unit' => 'required', 
             'add_element' => 'required', 
             'description' => 'required', 
-            'images.*' => 'required|image|max:2048', // Validate each uploaded image file
+             // Validate each uploaded image file
         ]);
    
  
@@ -196,7 +197,8 @@ class ProductController extends Controller
         product::create($form_data);
       
         $productId = DB::getPdo()->lastInsertId();
-      
+        $video = $request->file('video') ;
+       $videos= $video->getClientOriginalName();
         foreach ($request->file('images') as $image) {
           $filename = $image->getClientOriginalName();
   
@@ -204,9 +206,11 @@ class ProductController extends Controller
           $productImage = new product_images;
           $productImage->product_id = $productId; // Set the product ID
           $productImage->filename = $filename;
+          $productImage->video = $videos;
           $productImage->save();
   
           // Save the image file
+          $video->storeAs('public/videos', $videos);
           $image->storeAs('public/images', $filename);
       }
   

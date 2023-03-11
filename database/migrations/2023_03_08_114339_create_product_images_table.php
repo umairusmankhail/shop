@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
          
             $table->unsignedBigInteger('product_id');
-            $table->string('filename');
+            $table->string('filename')->nullable();
+            $table->string('video')->nullable();
            
             // add any other necessary columns
         

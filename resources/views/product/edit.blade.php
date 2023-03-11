@@ -265,16 +265,7 @@
     </div>
   </div>
 </div>
-<div class="form-group">
-        <label for="images">Product Images:</label>
-        <input type="file" name="images[]" id="images" class="form-control-file" multiple>
-        @foreach ($images as $image)
-            <div class="mt-2">
-                <img src="{{ asset('storage/' . $image->filename) }}" alt="{{ $image->image }}" style="max-width: 200px;">
-                <a href="{{ route('product_images.delete', ['id' => $image->id]) }}" class="text-danger ml-2">Delete</a>
-            </div>
-        @endforeach
-    </div>
+
 <script>
   function handleImageUpload(input) {
     if (input.files && input.files[0]) {

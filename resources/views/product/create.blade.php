@@ -248,9 +248,9 @@
         <div class="card p-5 mr-2 image-card">
           <label for="input-file5" class="btn btn-outline-secondary">
             <i class="fas fa-plus fa-2x"></i><br>
-            Upload Image
+            Upload Video
           </label>
-          <input type="file" name="images[]" id="input-file5" class="d-none" onchange="handleImageUpload(this)">
+          <input type="file" name="video" id="input-file5" class="d-none" onchange="handleImageUpload(this)">
         </div>
       </div>
     </div>
