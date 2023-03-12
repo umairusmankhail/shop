@@ -46,11 +46,11 @@
       <td>
           
 
-          <a class="btn btn-primary" href="{{ route('edit-category',$categories->id) }}">Edit</a> 
+          <a class="btn btn-sm btn-primary" href="{{ route('edit-category',$categories->id) }}">Edit</a> 
        
        
 
-         <a href="{{ route('category-destroy',$categories->id) }}" class="btn btn-danger">Delete</a>
+         <a href="{{ route('category-destroy',$categories->id) }}" class="btn btn-sm btn-danger">Delete</a>
      
  </td>
    
