@@ -65,25 +65,22 @@ class CategoryController extends Controller
  
    
  
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        $rules = array(
-            'cat_name'        =>  'required',
-           
-        );
- 
- 
-        $form_data = array(
-            'cat_name'    =>  $request->cat_name,
-                   );
- 
-        category::whereId($request->hidden_id)->update($form_data);
- 
-        return redirect()->back()->with('success', 'Subcategory added successfully.');
-    }
+        $request->validate([
+            'cat_name' => 'required',
+         ]);
+      
+      
+         $category = category::findOrFail($id);
+         $category->cat_name = $request->input('cat_name');
+     
+         $category->save();
+          return redirect()->route('category')->with('success','category Has Been updated successfully');   
  
   
-
+        }
+    
 
  
     public function destroy($id)

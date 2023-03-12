@@ -25,7 +25,7 @@
         <div class="card card-default">
        
           <!-- /.card-header -->
-          <form action="{{route('category.store')}}" method="post" name="customer" enctype="multipart/form-data">
+          <form action="{{route('category.store')}}" method="post" name="category" enctype="multipart/form-data">
             @csrf
           <div class="card-body">
             <div class="row">
@@ -49,7 +49,7 @@
               <!-- /.col -->
         
             <!-- /.row -->
-            <form method="POST" action="{{ route('subcategory.store') }}">
+            <form method="POST" name="subcategory" action="{{ route('subcategory.store') }}">
                 @csrf
             <div class="row">
                 <div class="col-md-6">
@@ -96,39 +96,26 @@
         <!-- /.card -->
 <!--end row-->
 
+@endsection
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script>
-  $(function() {
-  // Initialize form validation on the registration form.
-  // It has the name attribute "registration"
-  $("form[name='customer']").validate({
+
+$(document).ready(function() {
+  $("form[name='subcategory']").validate({
     // Specify validation rules
     rules: {
-      // The key name on the left side is the name attribute
-      // of an input field. Validation rules are defined
-      // on the right side
-  
-      email: {
-        required: true,
-        // Specify that email should be validated
-        // by the built-in "email" rule
-        email: true
+      cat_id: {
+        required: true
       },
-      password: {
-        required: true,
-        minlength: 5,
-        maxlength : 12
-      }
+      sub_name:{
+       required:true
+      },
     },
     // Specify validation error messages
     messages: {
-  
-      password: {
-        required: "Please provide a password",
-        minlength: "Your password must be at least 5 characters long",
-        maxlength: "Your password must be at least 12 characters long"
-     
-      },
-      email: "Please enter a valid email address"
+      cat_id: "Please enter a Category Name",
+      sub_name: "Please enter subcategory name",
     },
     // Make sure the form is submitted to the destination defined
     // in the "action" attribute of the form when valid
@@ -138,6 +125,30 @@
   });
 });
 
-  </script>
+</script>
 
-@stop
+<script>
+
+$(document).ready(function() {
+  $("form[name='category']").validate({
+    // Specify validation rules
+    rules: {
+      cat_name: {
+        required: true
+      },
+     
+    },
+    // Specify validation error messages
+    messages: {
+      cat_name: "Please enter a Category Name",
+    
+    },
+    // Make sure the form is submitted to the destination defined
+    // in the "action" attribute of the form when valid
+    submitHandler: function(form) {
+      form.submit();
+    }
+  });
+});
+
+</script>
