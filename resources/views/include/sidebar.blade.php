@@ -1,15 +1,7 @@
-<style>
-  .sidebarwhite{
-    background:white;
-  }
-  #snav ul li a{
-    color:#34495e;
-  }
-  
 
-  </style>
+
 <!-- Main Sidebar Container -->
-    <aside class="main-sidebar sidebar-dark-primary elevation-4 sidebarwhite">
+    <aside class="main-sidebar  elevation-4 sidebarwhite">
         <!-- Brand Logo -->
         <a href="#" class="brand-link" style="border:none">
           
@@ -30,28 +22,86 @@
           <!-- Sidebar Menu -->
           <nav id="snav" class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-              <!-- Add icons to the links using the .nav-icon class
-                   with font-awesome or any other icon font library -->
-              <li class="nav-item menu-open">
-                
-                <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                    <a href="category" class="nav-link ">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Category</p>
-                    </a>
-                  </li>
-                 
-               
+    
+            <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="far fa-circle nav-icon"></i>
+              <p>
+                Category & Sub-Categories
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="product-index" class="nav-link">
-                  <i class="nav-icon far fa-circle"></i>
-                  <p>
-                   Products
-                    <!-- <span class="right badge badge-danger">New</span> -->
-                  </p>
+                <a href="{{route('category')}}" class="nav-link">
+                <i class="fas fa-angle-right left nav-icon"></i>  
+                <p>Main Category</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                <i class="fas fa-angle-right left nav-icon"></i>
+                  <p>Sub Category</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{route('product-index')}}" class="nav-link">
+              <i class="far fa-circle nav-icon"></i>
+              <p>
+                Indiviual Product & Category Product
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{route('product-index')}}" class="nav-link">
+              <i class="far fa-circle nav-icon"></i>
+              <p>
+                Inquiry Cart & Restriction Record
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{route('product-index')}}" class="nav-link">
+              <i class="far fa-circle nav-icon"></i>
+              <p>
+                Inquiry Cart & Inquiry/Request A Quote
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{route('product-index')}}" class="nav-link">
+              <i class="far fa-circle nav-icon"></i>
+              <p>
+                Registration & Restriction Record
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{route('product-index')}}" class="nav-link">
+              <i class="far fa-circle nav-icon"></i>
+              <p>
+               Slider, Privacy, Sitemap & Footer
+              </p>
+            </a>
+          </li>
+
+          
+          <li class="nav-item">
+            <a href="{{route('product-index')}}" class="nav-link">
+              <i class="far fa-circle nav-icon"></i>
+              <p>
+               Trash Bin
+              </p>
+            </a>
+          </li>
+
               
             </ul>
           </nav>
