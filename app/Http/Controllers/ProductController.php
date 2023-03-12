@@ -131,7 +131,18 @@ public function index(){
     }
     public function deleteSelected(Request $request)
 {
-    $ids = $request->selected;
+    // $users = explode(',', $request->all_providers);
+
+    //     foreach ($users as $key => $user) {
+    //         DB::table('clinic_user')->delete($user);
+    //     }
+
+    //     return redirect()->back()->with('message', 'Users Deleted Successfully');
+    
+    // dd($request->product_delete);
+    $ids = explode(',', $request->product_delete);
+
+    
     
     product_images::whereIn('product_id', $ids)->delete();
     

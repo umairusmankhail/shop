@@ -36,12 +36,16 @@
         <p>{{ $message }}</p>
     </div>
 @endif
+Check all
+
+<input type="checkbox" class="mb-4" name="check_all" id="checkAll">
+
 
  <table class="table table-striped table-bordered user_datatable"> 
                 <thead>
                     <tr>
                     <th>
-    <input type="checkbox" id="check-all">
+                  
 </th>
                        
                         <th>ID</th>
@@ -53,7 +57,10 @@
                 <tbody></tbody>
             </table>   
             
-
+            <form action="{{ route('products.deleteSelected') }}" id="providers-delete" method="post">
+        @csrf
+        <input type="hidden" name="product_delete" id="product_delete">
+    </form>
 
 </section>
 
@@ -83,7 +90,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
 <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-
 <script>
 $(document).ready(function() {
   var table = $('.user_datatable').DataTable({
@@ -98,50 +104,51 @@ $(document).ready(function() {
         searchable: false,
         width: '10px',
         render: function (data, type, full, meta) {
-          return '<input type="checkbox" class="checkbox" name="selected[]" value="' + $('<div/>').text(data.id).html() + '">';
+          return '<input type="checkbox" class="p_users" name="check_all" value="' + $('<div/>').text(data.id).html() + '">';
         }
       },
       {data: 'id', name: 'id'},
       {data: 'p_name', name: 'p_name'},
+      {data: 'description', name: 'description'},
+   
       {data: 'action', name: 'action', orderable: false, searchable: false},
     ],
     order: [[ 1, 'asc' ]]
   });
-
-  $('#delete-selected').click(function() {
-    var ids = $('input.checkbox:checked').map(function() {
-      return $(this).val();
-    }).get();
-
-    if (ids.length === 0) {
-      alert('Please select at least one record to delete.');
-      return;
-    }
-
-    if (confirm('Are you sure you want to delete the selected records?')) {
-      $.ajax({
-        type: 'DELETE',
-        url: '{{ route('products.deleteSelected') }}',
-        data: {
-          ids: ids,
-          _token: '{{ csrf_token() }}'
-        },
-        success: function(response) {
-          if (response.success) {
-            table.draw();
-          } else {
-            alert('Error: ' + response.message);
-          }
-        },
-        error: function(xhr, status, error) {
-          alert('Error: ' + error);
-        }
-      });
-    }
-  });
 });
 </script>
 
+ 
+ 
+<script>
+    $("#checkAll").click(function () {
+        var check = $('#checkAll').is(":checked");
+
+        if (check == true) {
+            $('.delete-records').show();
+        } else {
+            $('.delete-records').hide();
+        }
+		
+        $('input:checkbox').not(this).prop('checked', this.checked);
+
+        var array = []
+        var checkboxes = document.querySelectorAll('.p_users:checked')
+
+        for (var i = 0; i < checkboxes.length; i++) {
+            array.push(checkboxes[i].value)
+        }
+        if (array.length == 0) {
+            $('.delete-records').hide();
+        }
+        console.log(array)
+        $('#product_delete').val(array)
+    });
+    $("#delete-selected").click(function (e) {
+        e.preventDefault();
+        $('form').submit();
+    });
+</script>
 
 
 

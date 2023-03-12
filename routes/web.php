@@ -75,7 +75,7 @@ Route::delete('/products/{id}', [ProductController::class,'destroy'])->name('pro
 Route::get('/import', [ProductImportController::class, 'showImportForm'])->name('import.form');
 Route::post('/import', [ProductImportController::class, 'import'])->name('import.products');
 
-Route::delete('/products/delete-selected', [ProductController::class, 'deleteSelected'])->name('products.deleteSelected');
+Route::post('/products/delete-selected', [ProductController::class, 'deleteSelected'])->name('products.deleteSelected');
 
      
 
