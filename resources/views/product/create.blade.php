@@ -34,7 +34,7 @@
         <div class="card card-default">
        
           <!-- /.card-header -->
-          <form action="{{route('product.store')}}" method="post"  enctype="multipart/form-data">
+          <form action="{{route('product.store')}}" method="post" name="product"  enctype="multipart/form-data">
             @csrf
           <div class="card-body">
           <div class="form-row">
@@ -381,6 +381,39 @@ $(document).ready(function() {
                 <button type="submit" class="btn btn-block btn-primary">Submit</button>
                 </div>
   </form>
+<script>
+$(document).ready(function() {
+  $("form[name='product']").validate({
+    // Specify validation rules
+    rules: {
+      p_name: {
+        required: true
+      },
+      description: {
+        required: true
+      },
+      price: {
+        required: true,
+        min: 0
+      }
+    },
+    // Specify validation error messages
+    messages: {
+      name: "Please enter a product name",
+      description: "Please enter a product description",
+      price: {
+        required: "Please enter a product price",
+        min: "Product price cannot be negative"
+      }
+    },
+    // Make sure the form is submitted to the destination defined
+    // in the "action" attribute of the form when valid
+    submitHandler: function(form) {
+      form.submit();
+    }
+  });
+});
 
+</script>
 
 @endsection
