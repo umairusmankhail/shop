@@ -18,8 +18,8 @@ class CategoryController extends Controller
         return view('category.index', compact('subcategories'));
     }
     public function edit(){
-        $category= category::get();
-        return view('category.edit')->with(['category' => $category]);
+        $categories = category::get();
+        return view('category.edit')->with(['categories' => $categories]);
     }
     public function editcategory($id){
         
@@ -63,23 +63,13 @@ class CategoryController extends Controller
        
     
  
-   
- 
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'cat_name' => 'required',
-         ]);
-      
-      
-         $category = category::findOrFail($id);
-         $category->cat_name = $request->input('cat_name');
-     
-         $category->save();
-          return redirect()->route('category')->with('success','category Has Been updated successfully');   
- 
-  
-        }
+        $category = category::findOrFail($id);
+        $category->cat_name = $request->input('cat_name');
+        $category->save();
+        return response()->json(['message' => 'Category updated successfully.']);
+    }
     
 
  
@@ -93,6 +83,7 @@ class CategoryController extends Controller
         }
          
         $category->delete();
+        return redirect()->back()->with('success', 'Category delete successfully.');
     }
     
 

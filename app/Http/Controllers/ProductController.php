@@ -129,25 +129,17 @@ public function index(){
   
         
     }
-    public function delete($id)
-    {
-        dd($id);
+    public function deleteSelected(Request $request)
+{
+    $ids = $request->selected;
     
-        /* try {
-            $product = product::findOrFail($id);
-        } catch (ModelNotFoundException $e) {
-            return response()->json(['success' => false]);
-        }
+    product_images::whereIn('product_id', $ids)->delete();
     
-        $productImages = product_images::where('product_id', $id)->get();
-        foreach ($productImages as $productImage) {
-            Storage::delete($productImage->image_path);
-            $productImage->delete();
-        }
-        $product->delete();
+    product::whereIn('id', $ids)->delete();
     
-        return response()->json(['success' => true]); */
-    }
+    return response()->json(['success' => true]);
+}
+
     
 
   

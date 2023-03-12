@@ -36,9 +36,9 @@ Route::middleware([
    Route::get('/category', [CategoryController::class, 'index'])->name('category');
     Route::get('/create', [CategoryController::class, 'create'])->name('category.create');
     Route::get('/categoryedit', [CategoryController::class, 'edit'])->name('category.edit');
-    Route::put('/category-update{id}',[CategoryController::class,'update'])->name('category-update');
-  
-    Route::get('/category-destroy{id}',[CategoryController::class,'destroy'])->name('category-destroy');
+   
+    Route::put('/categories/{id}', [CategoryController::class,'update'])->name('categories.update');
+    Route::delete('/categories/{id}', [CategoryController::class,'destroy'])->name('categories.destroy');
 
 
     // Subcategory Route
@@ -75,8 +75,7 @@ Route::delete('/products/{id}', [ProductController::class,'destroy'])->name('pro
 Route::get('/import', [ProductImportController::class, 'showImportForm'])->name('import.form');
 Route::post('/import', [ProductImportController::class, 'import'])->name('import.products');
 
-
-Route::delete('/products/delete-selected', [ProductController::class,'delete'])->name('products.deleteSelected');
+Route::delete('/products/delete-selected', [ProductController::class, 'deleteSelected'])->name('products.deleteSelected');
 
      
 
