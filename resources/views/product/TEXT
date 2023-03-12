@@ -148,6 +148,7 @@ public function edit($id)
 
 
 <a class="btn btn-primary" href="{{ route('products.edit',$data->id) }}">Edit</a> 
+
        
        
 <form action="{{ route('products.destroy', ['id' => $data->id]) }}" method="POST">

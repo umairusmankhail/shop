@@ -35,7 +35,9 @@
 @endif <table class="table table-striped table-bordered user_datatable"> 
                 <thead>
                     <tr>
-                    <th>ID</th>
+                    <th>
+    <input type="checkbox" id="check-all">
+</th>
                        
                         <th>ID</th>
                         <th>ProuductName</th>

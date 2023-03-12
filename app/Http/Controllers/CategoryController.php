@@ -88,9 +88,16 @@ class CategoryController extends Controller
  
     public function destroy($id)
     {
-        $data = category::findOrFail($id);
-        $data->delete();
+        $category = category::findOrFail($id);
+        $subcategories = sub_category::where('category_id', $category->id)->get();
+        
+        foreach ($subcategories as $subcategory) {
+            $subcategory->delete();
+        }
+         
+        $category->delete();
     }
+    
 
     // Function for Subcategory
 
@@ -128,7 +135,7 @@ class CategoryController extends Controller
         $subcategory->category_id = $request->input('category_id');
        $subcategory->sub_name=$request->sub_name;
         $subcategory->save();
-         return redirect()->route('category')->with('success','home Has Been updated successfully');
+         return redirect()->route('category')->with('success','Subcategory Has Been updated successfully');
     }
 
 
