@@ -19,7 +19,7 @@
           <a href="{{ route('product') }}"> <button type="button" class="btn btn-sm btn-primary ">Add Product</button></a>
           <a href="{{ route('import.form') }}"><button type="button" class="btn btn-sm btn-primary ">Upload Product</button></a>
         
-          <button class="btn btn-danger" id="delete-selected">Delete Selected</button>
+          <button class="btn btn-sm btn-danger" id="delete-selected">Delete Selected</button>
 
       
           </div>
