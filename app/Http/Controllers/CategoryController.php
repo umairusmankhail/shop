@@ -13,12 +13,12 @@ class CategoryController extends Controller
 {
     public function index(Request $request)
     {
-        $subcategories = sub_category::with('category')->get();
+        $categories = category::with('category')->get();
     
-        return view('category.index', compact('subcategories'));
+        return view('category.index', compact('categories'));
     }
     public function edit(){
-        $categories = category::get();
+        $categories = category::with('subcategories')->get();
         return view('category.edit')->with(['categories' => $categories]);
     }
     public function editcategory($id){
@@ -31,7 +31,23 @@ class CategoryController extends Controller
   
    
        
-     
+    public function update(Request $request, $id)
+    {
+        if ($request->has('cat_name')) {
+            $category = category::findOrFail($id);
+            $category->cat_name = $request->input('cat_name');
+            $category->save();
+        } elseif ($request->has('sub_name')) {
+            $subcategory = sub_category::findOrFail($id);
+            $subcategory->sub_name = $request->input('sub_name');
+            $subcategory->save();
+        }
+        
+        return response()->json(['success' => true]);
+    }
+    
+    
+ 
 
 
     
@@ -48,7 +64,7 @@ class CategoryController extends Controller
         ]);
     
         // Create a new category instance and save it to the database
-        $category = new Category;
+        $category = new category;
         $category->cat_name = $validatedData['cat_name'];
         $category->save();
     
@@ -63,7 +79,7 @@ class CategoryController extends Controller
        
     
  
-    public function update(Request $request, $id)
+    public function updatecategory(Request $request, $id)
     {
         $category = category::findOrFail($id);
         $category->cat_name = $request->input('cat_name');
@@ -136,7 +152,7 @@ class CategoryController extends Controller
    
     $subcategory->delete();
 
-    return redirect()->route('category.index')
+    return redirect()->route('category')
         ->with('success', 'Subcategory deleted successfully');
 }
 
