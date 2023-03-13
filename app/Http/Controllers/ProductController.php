@@ -148,7 +148,8 @@ public function index(){
     
     product::whereIn('id', $ids)->delete();
     
-    return response()->json(['success' => true]);
+    return redirect()->route('product-index')->with('success', 'Product and images deleted successfully.');
+ 
 }
 
     

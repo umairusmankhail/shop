@@ -37,7 +37,9 @@ Route::middleware([
     Route::get('/create', [CategoryController::class, 'create'])->name('category.create');
     Route::get('/categoryedit', [CategoryController::class, 'edit'])->name('category.edit');
    
-    Route::put('/categories/{id}', [CategoryController::class,'update'])->name('categories.update');
+    Route::put('/categorsies/{id}', [CategoryController::class,'updatecategory']);
+    Route::post('/categories/{id}', [CategoryController::class,'update'])->name('categories.update');
+
     Route::delete('/categories/{id}', [CategoryController::class,'destroy'])->name('categories.destroy');
 
 

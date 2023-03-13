@@ -41,22 +41,27 @@
         <p>{{ $message }}</p>
     </div>
 @endif
-<!-- HTML code -->    <table class="table">
+<!-- HTML code --> 
+
+
+   <table class="table">
         <thead>
             <tr>
                 <th>Name</th>
                 <th>Action</th>
             </tr>
         </thead>
+
         <tbody>
             @foreach ($categories as $category)
             <tr>
                 <td>
-                    <span class="editable" data-id="{{ $category->id }}">{{ $category->cat_name }}</span>
+                    <span class="editable btn  edit" data-id="{{ $category->id }}">{{ $category->cat_name }}</span>
                     <input type="text" class="form-control form-control-sm d-none" data-id="{{ $category->id }}" value="{{ $category->cat_name }}" />
                 </td>
                 <td>
-                    <button class="btn btn-sm btn-primary edit" data-id="{{ $category->id }}">Edit</button>
+                  <td>
+                  
                     <button class="btn btn-sm btn-success save d-none" data-id="{{ $category->id }}">Save</button>
                     <button class="btn btn-sm btn-secondary cancel d-none" data-id="{{ $category->id }}">Cancel</button>
                     <form action="{{ route('categories.destroy', $category->id) }}" method="POST" style="display: inline-block">

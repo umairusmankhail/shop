@@ -238,13 +238,21 @@
           </label>
           <input type="file" name="images[]" id="input-file3" class="d-none" onchange="handleImageUpload(this)">
         </div>
-        <div class="card p-5 mr-2 image-card" id="card-4">
-          <label for="input-file4" class="btn btn-outline-secondary">
-            <i class="fas fa-plus fa-2x"></i><br>
-            Upload Image
-          </label>
-          <input type="file" name="images[]" id="input-file4" class="d-none" onchange="handleImageUpload(this)">
-        </div>
+        <div id="image-upload">
+  <label for="file-upload">
+    <span id="upload-text">Choose an image to upload or drag it here</span>
+    <img id="uploaded-image" class="d-none img-fluid">
+    <span id="drag-file-name" class="d-none"></span>
+  </label>
+  <input type="file" id="file-upload" accept="image/*">
+</div>
+
+<div class="card mt-4 d-none" id="image-card">
+  <img class="card-img-top" id="card-image">
+  <div class="card-body">
+    <button type="button" class="btn btn-danger" id="delete-image">Delete Image</button>
+  </div>
+</div>
         <div class="card p-5 mr-2 image-card" id="card-5">
           <label for="input-file5" class="btn btn-outline-secondary">
             <i class="fas fa-plus fa-2x"></i><br>
@@ -256,27 +264,21 @@
     </div>
   </div>
 </div>
-<script>
-  function handleImageUpload(input) {
-    if (input.files && input.files[0]) {
-      var reader = new FileReader();
 
-      reader.onload = function (e) {
-        var card = input.parentNode;
-        card.style.backgroundImage = 'url(' + e.target.result + ')';
-        card.style.backgroundSize = 'cover';
-      }
 
-      reader.readAsDataURL(input.files[0]);
-    }
-  }
-</script>
+
+
+
+
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <!-- include the jQuery UI library -->
 <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
+
+
 <script>
 
 
@@ -290,61 +292,68 @@ $(document).ready(function() {
 
   </script>
 
+
 <script>
-    $(function () {
-        // Make the dropzone a droppable area
-        $("#dropzone").on("dragover", function (event) {
-            event.preventDefault();
-            $(this).addClass("dragover");
-        });
+  const imageUpload = document.getElementById("image-upload");
+  const uploadText = document.getElementById("upload-text");
+  const uploadedImage = document.getElementById("uploaded-image");
+  const fileUpload = document.getElementById("file-upload");
+  const imageCard = document.getElementById("image-card");
+  const cardImage = document.getElementById("card-image");
+  const deleteImageBtn = document.getElementById("delete-image");
+  const dragFileName = document.getElementById("drag-file-name");
 
-        $("#dropzone").on("dragleave", function (event) {
-            event.preventDefault();
-            $(this).removeClass("dragover");
-        });
+  // Show the uploaded image when a file is selected
+  fileUpload.addEventListener("change", function(event) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = function(event) {
+      uploadedImage.src = event.target.result;
+      uploadText.classList.add("d-none");
+      uploadedImage.classList.remove("d-none");
+      imageCard.classList.remove("d-none");
+      cardImage.src = event.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
 
-        $("#dropzone").on("drop", function (event) {
-            event.preventDefault();
-            $(this).removeClass("dragover");
+  // Show the uploaded image and file name when it is dragged and dropped
+  imageUpload.addEventListener("dragover", function(event) {
+    event.preventDefault();
+    imageUpload.classList.add("drag-over");
+  });
+  imageUpload.addEventListener("dragleave", function(event) {
+    event.preventDefault();
+    imageUpload.classList.remove("drag-over");
+  });
+  imageUpload.addEventListener("drop", function(event) {
+    event.preventDefault();
+    imageUpload.classList.remove("drag-over");
+    const file = event.dataTransfer.files[0];
+    const reader = new FileReader();
+    reader.onload = function(event) {
+      uploadedImage.src = event.target.result;
+      uploadText.classList.add("d-none");
+      uploadedImage.classList.remove("d-none");
+      imageCard.classList.remove("d-none");
+      cardImage.src = event.target.result;
+      dragFileName.innerText = file.name;
+      dragFileName.classList.remove("d-none");
+    };
+    reader.readAsDataURL(file);
+  });
 
-            // Get the dropped files
-            var files = event.originalEvent.dataTransfer.files;
-
-            // Loop through the dropped files
-            for (var i = 0; i < files.length; i++) {
-                var file = files[i];
-
-                // Check if the dropped file is an image
-                if (file.type.match(/^image\//)) {
-                    // Create a new image element
-                    var img = $("<img>");
-
-                    // Set the source of the image to the dropped file
-                    img.attr("src", URL.createObjectURL(file));
-
-                    // Make the image draggable
-                    img.draggable({
-                        revert: "invalid",
-                        helper: "clone"
-                    });
-
-                    // Add the image to the dropzone
-                    $(this).append(img);
-                }
-            }
-        });
-
-        // Make the dropzone a droppable area
-        $("#dropzone").droppable({
-            drop: function (event, ui) {
-                // Get the dropped image
-                var droppedImg = ui.draggable;
-
-                // Add the image to the dropzone
-                $(this).append(droppedImg);
-            }
-        });
-    });
+  // Delete the uploaded image and file name when the Delete Image button is clicked
+  deleteImageBtn.addEventListener("click", function() {
+    uploadedImage.src = "";
+    uploadText.classList.remove("d-none");
+    uploadedImage.classList.add("d-none");
+    imageCard.classList.add("d-none");
+    cardImage.src = "";
+    dragFileName.innerText = "";
+    dragFileName.classList.add("d-none");
+  });
+</script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
  
 <script>
