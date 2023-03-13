@@ -210,13 +210,17 @@
       <label for="textarea1">Description</label>
       <textarea class="form-control" id="textarea1" name="description" rows="4"></textarea>
     </div>
-  
+
+
+
+
 </div>
 <div class="row">
   <div class="col-md-12">
     <div class="form-group">
       <label for="input-files">Images</label>
       <div class="d-flex">
+      
         <div class="card p-5 mr-2 image-card" id="dropzone">
           <label for="input-file1" class="btn btn-outline-secondary">
             <i class="fas fa-plus fa-2x"></i><br>
@@ -243,7 +247,7 @@
             <i class="fas fa-plus fa-2x"></i><br>
             Upload Image
           </label>
-          <input type="file" name="images[]" id="input-file4" class="d-none" onchange="handleImageUpload(this)">
+          <input type="file" name="images[]" id="input-file4"  class="d-none" onchange="handleImageUpload(this)">
         </div>
         <div class="card p-5 mr-2 image-card" id="card-5">
           <label for="input-file5" class="btn btn-outline-secondary">
@@ -278,6 +282,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
 <script>
+
 
 
 $(document).ready(function() {
