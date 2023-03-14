@@ -228,7 +228,7 @@ Add New Element
       <input type="text" class="form-control" id="input1" name="thickness">
     </div>
     <div class="form-group col-md-4 mb-3">
-      <label for="input2">Thickness\Unit</label>
+      <label for="input2">Thickness Per Unit</label>
       <input type="text" class="form-control" id="input2" name="thickness_unit">
     </div>
     <div class="form-group col-md-3 mb-3">
@@ -241,10 +241,7 @@ Add New Element
       <label for="textarea1">Description</label>
       <textarea class="form-control" id="textarea1" name="description" rows="4"></textarea>
     </div>
-
-
-
-
+  
 </div>
 
 
@@ -270,35 +267,34 @@ Add New Element
             Upload Image
           </label>
           <input type="file" name="images[]" id="input-file2" class="d-none" onchange="handleImageUpload(this)">
-        </div>
-        <div class="card p-5 mr-2 image-card" id="card-3">
+        </div> 
+        <div class="card p-5 mr-2 image-card drag-area" id="card-3">
           <label for="input-file3" class="btn btn-outline-secondary">
-            <i class="fas fa-plus fa-2x"></i><br>
+          <button class="fas fa-plus fa-2x drag-btn"></button><br>
             Upload Image
           </label>
           <input type="file" name="images[]" id="input-file3" class="d-none" onchange="handleImageUpload(this)">
         </div>
-        <div id="image-upload">
-  <label for="file-upload">
-    <span id="upload-text">Choose an image to upload or drag it here</span>
-    <img id="uploaded-image" class="d-none img-fluid">
-    <span id="drag-file-name" class="d-none"></span>
-  </label>
-  <input type="file" id="file-upload" accept="image/*">
-</div>
-
+        <div class="card p-5 mr-2 image-card drag-area" id="card-4">
+          <label for="input-file4" class="btn btn-outline-secondary">
+          <button class="fas fa-plus fa-2x drag-btn"></button><br>
+            Upload Image
+          </label>
+          <input type="file" name="images[]" id="input-file4"  class="d-none" onchange="handleImageUpload(this)">
+        </div>
+  
 <div class="card mt-4 d-none" id="image-card">
   <img class="card-img-top" id="card-image">
   <div class="card-body">
     <button type="button" class="btn btn-danger" id="delete-image">Delete Image</button>
   </div>
 </div>
-        <div class="card p-5 mr-2 image-card" id="card-5">
+       <div class="card p-5 mr-2 image-card" id="card-5" style="height:180px;width:250px;">
           <label for="input-file5" class="btn btn-outline-secondary">
             <i class="fas fa-plus fa-2x"></i><br>
             Upload Video
           </label>
-          <input type="file" name="video" id="input-file5" class="d-none" >
+          <input type="file" name="video" id="input-file5" class="d-none" onchange="handleImageUpload(this)">
         </div>
       </div>
     </div>
@@ -317,7 +313,29 @@ Add New Element
 
 
 <script>
+  $(document).ready(function() {
+    // Initialize a counter to keep track of the number of added elements
+    var counter = 0;
 
+    // Add value to display and hidden inputs on "Add" button click
+    $('#addValueBtn').click(function() {
+      var value = $('#valueInput').val();
+      
+      // Generate the HTML for the label, value input, and label input
+      var labelHtml = '<label>' + value + '</label>';
+      var valueInputHtml = '<input type="text" class="form-control" name="value[]" value="" style="margin-left: 2px;">';
+      var labelInputHtml = '<input type="hidden" name="label[]" value="' + value + '">';
+
+      // Append the generated elements to the container
+      $('#valuesContainer').append('<div class="col-sm-2">' + labelHtml + valueInputHtml + labelInputHtml + '</div>');
+      counter++;
+
+      // Clear the input field and hide the modal
+      $('#valueInput').val('');
+      $('#myModal').modal('hide');
+    });
+  });
+</script>
 
 <script>
 $(document).ready(function() {
@@ -485,6 +503,7 @@ dragAreas.forEach(dropArea => {
 
 
 </script>
+
 
 
 @endsection
