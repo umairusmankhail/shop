@@ -83,12 +83,7 @@
 </div>
 <!-- ./wrapper -->
 
-<<<<<<< HEAD
-@endsection
-=======
 
-
->>>>>>> 7da1f6d3a9b597c0df9af7e06b7ed0a084e2d928
 @push('js')
   
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
@@ -130,14 +125,6 @@ $(document).ready(function() {
 });
 </script>
 
-<<<<<<< HEAD
-=======
-
-
-
- 
- 
->>>>>>> 7da1f6d3a9b597c0df9af7e06b7ed0a084e2d928
 <script>
     $("#checkAll").click(function () {
         var check = $('#checkAll').is(":checked");
