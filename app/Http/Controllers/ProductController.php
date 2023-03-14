@@ -6,6 +6,7 @@ use App\Models\sub_category;
 use App\Models\category;
 use Illuminate\Http\Request;
 use App\Models\product_images;
+use App\Models\add_element;
 use Illuminate\Support\Facades\DB;
 use Response;
 use Redirect;
@@ -213,6 +214,8 @@ public function index(){
             'thickness_unit' => 'required', 
             'add_element' => 'required', 
             'description' => 'required', 
+            'label.*' => 'string|nullable|max:255',
+            'value.*' => 'string|nullable|max:255',
              // Validate each uploaded image file
         ]);
    
@@ -259,6 +262,23 @@ public function index(){
         product::create($form_data);
       
         $productId = DB::getPdo()->lastInsertId();
+               // loop through the labels and values and create new add_element records
+               $addedPairs = [];
+
+               foreach ($validatedData['label'] as $key => $label) {
+                   $value = $validatedData['value'][$key];
+                   // check if label and value pair has not been added already and is not empty
+                   if (!empty($label) && !empty($value) && !isset($addedPairs["$label|$value"])) {
+                       add_element::create([
+                           'product_id' => $productId,
+                           'label' => $label,
+                           'value' => $value,
+                       ]);
+                       // add label-value pair to added pairs array
+                       $addedPairs["$label|$value"] = true;
+                   }
+               }
+        // Check if video file exists
         if ($request->hasFile('video')) {
             $video = $request->file('video');
             $videoName = $video->getClientOriginalName();
@@ -267,6 +287,7 @@ public function index(){
             $videoName = null;
         }
         
+        // Check if image files exist
         $images = $request->file('images');
         if (isset($images)) {
             foreach ($images as $image) {
@@ -276,12 +297,22 @@ public function index(){
                 $productImage = new product_images;
                 $productImage->product_id = $productId; // Set the product ID
                 $productImage->filename = $imageName;
-                $productImage->video = $videoName;
+        
+                // Check if video name exists
+                if ($videoName) {
+                    $productImage->video = $videoName;
+                }
+        
                 $productImage->save();
         
                 // Save the image file
                 $image->storeAs('public/images', $imageName);
             }
+        } else {
+            // Create a new product image with only the product ID
+            $productImage = new product_images;
+            $productImage->product_id = $productId; // Set the product ID
+            $productImage->save();
         }
         
       return redirect()->route('product-index')->with('success', 'Product created successfully.');

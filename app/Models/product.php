@@ -12,8 +12,12 @@ class product extends Model
 
 
     public function product(){
-        {
+        
             return $this->hasmany(product_images::class);
         }
+        public function add_element()
+        {
+            return $this->hasMany(add_element::class);
+        }
     }
-}
+

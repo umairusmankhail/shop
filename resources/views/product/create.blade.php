@@ -8,7 +8,9 @@
       border-radius: 5px;
       cursor: pointer;
     }
+
     </style>
+
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -21,6 +23,10 @@
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
               <li class="breadcrumb-item active">Product Form</li>
+ <li class= "breadcrumb-item active">        
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+Add New Element
+  </button></li>
             </ol>
           </div>
         </div>
@@ -32,10 +38,12 @@
       <div class="container-fluid">  
         <!-- SELECT2 EXAMPLE -->
         <div class="card card-default">
-       
+        
           <!-- /.card-header -->
           <form action="{{route('product.store')}}" method="post" name="product"  enctype="multipart/form-data">
             @csrf
+            
+     
           <div class="card-body">
           <div class="form-row">
     <div class="form-group col-md-4 mb-3">
@@ -212,6 +220,10 @@
     </div>
   
 </div>
+
+
+<div id="valuesContainer" class="row"> </div>
+
 <div class="row">
   <div class="col-md-12">
     <div class="form-group">
@@ -231,34 +243,13 @@
           </label>
           <input type="file" name="images[]" id="input-file2" class="d-none" onchange="handleImageUpload(this)">
         </div>
-        <div class="card p-5 mr-2 image-card" id="card-3">
-          <label for="input-file3" class="btn btn-outline-secondary">
-            <i class="fas fa-plus fa-2x"></i><br>
-            Upload Image
-          </label>
-          <input type="file" name="images[]" id="input-file3" class="d-none" onchange="handleImageUpload(this)">
-        </div>
-        <div id="image-upload">
-  <label for="file-upload">
-    <span id="upload-text">Choose an image to upload or drag it here</span>
-    <img id="uploaded-image" class="d-none img-fluid">
-    <span id="drag-file-name" class="d-none"></span>
-  </label>
-  <input type="file" id="file-upload" accept="image/*">
-</div>
-
-<div class="card mt-4 d-none" id="image-card">
-  <img class="card-img-top" id="card-image">
-  <div class="card-body">
-    <button type="button" class="btn btn-danger" id="delete-image">Delete Image</button>
-  </div>
-</div>
+  
         <div class="card p-5 mr-2 image-card" id="card-5">
           <label for="input-file5" class="btn btn-outline-secondary">
             <i class="fas fa-plus fa-2x"></i><br>
             Upload Video
           </label>
-          <input type="file" name="video" id="input-file5" class="d-none" onchange="handleImageUpload(this)">
+          <input type="file" name="video" id="input-file5" class="d-none" >
         </div>
       </div>
     </div>
@@ -268,11 +259,8 @@
 
 
 
-
-
-
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <!-- include the jQuery UI library -->
 <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -280,8 +268,31 @@
 
 
 <script>
+  $(document).ready(function() {
+    // Initialize a counter to keep track of the number of added elements
+    var counter = 0;
 
+    // Add value to display and hidden inputs on "Add" button click
+    $('#addValueBtn').click(function() {
+      var value = $('#valueInput').val();
+      
+      // Generate the HTML for the label, value input, and label input
+      var labelHtml = '<label>' + value + '</label>';
+      var valueInputHtml = '<input type="text" class="form-control" name="value[]" value="" style="margin-left: 2px;">';
+      var labelInputHtml = '<input type="hidden" name="label[]" value="' + value + '">';
 
+      // Append the generated elements to the container
+      $('#valuesContainer').append('<div class="col-sm-2">' + labelHtml + valueInputHtml + labelInputHtml + '</div>');
+      counter++;
+
+      // Clear the input field and hide the modal
+      $('#valueInput').val('');
+      $('#myModal').modal('hide');
+    });
+  });
+</script>
+
+<script>
 $(document).ready(function() {
     $('.d-flex').sortable({
         items: '.image-card',
@@ -293,68 +304,8 @@ $(document).ready(function() {
   </script>
 
 
-<script>
-  const imageUpload = document.getElementById("image-upload");
-  const uploadText = document.getElementById("upload-text");
-  const uploadedImage = document.getElementById("uploaded-image");
-  const fileUpload = document.getElementById("file-upload");
-  const imageCard = document.getElementById("image-card");
-  const cardImage = document.getElementById("card-image");
-  const deleteImageBtn = document.getElementById("delete-image");
-  const dragFileName = document.getElementById("drag-file-name");
 
-  // Show the uploaded image when a file is selected
-  fileUpload.addEventListener("change", function(event) {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-    reader.onload = function(event) {
-      uploadedImage.src = event.target.result;
-      uploadText.classList.add("d-none");
-      uploadedImage.classList.remove("d-none");
-      imageCard.classList.remove("d-none");
-      cardImage.src = event.target.result;
-    };
-    reader.readAsDataURL(file);
-  });
 
-  // Show the uploaded image and file name when it is dragged and dropped
-  imageUpload.addEventListener("dragover", function(event) {
-    event.preventDefault();
-    imageUpload.classList.add("drag-over");
-  });
-  imageUpload.addEventListener("dragleave", function(event) {
-    event.preventDefault();
-    imageUpload.classList.remove("drag-over");
-  });
-  imageUpload.addEventListener("drop", function(event) {
-    event.preventDefault();
-    imageUpload.classList.remove("drag-over");
-    const file = event.dataTransfer.files[0];
-    const reader = new FileReader();
-    reader.onload = function(event) {
-      uploadedImage.src = event.target.result;
-      uploadText.classList.add("d-none");
-      uploadedImage.classList.remove("d-none");
-      imageCard.classList.remove("d-none");
-      cardImage.src = event.target.result;
-      dragFileName.innerText = file.name;
-      dragFileName.classList.remove("d-none");
-    };
-    reader.readAsDataURL(file);
-  });
-
-  // Delete the uploaded image and file name when the Delete Image button is clicked
-  deleteImageBtn.addEventListener("click", function() {
-    uploadedImage.src = "";
-    uploadText.classList.remove("d-none");
-    uploadedImage.classList.add("d-none");
-    imageCard.classList.add("d-none");
-    cardImage.src = "";
-    dragFileName.innerText = "";
-    dragFileName.classList.add("d-none");
-  });
-</script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
  
 <script>
     $('#category').on('change', function() {
@@ -389,7 +340,34 @@ $(document).ready(function() {
 <div class="col-md-3">
                 <button type="submit" class="btn btn-block btn-primary">Submit</button>
                 </div>
+
+  
+
   </form>
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Add Value</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="valueInput">Label:</label>
+          <input type="text" class="form-control" id="valueInput">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="addValueBtn">Add</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
 <script>
 $(document).ready(function() {
   $("form[name='product']").validate({
@@ -424,5 +402,6 @@ $(document).ready(function() {
 });
 
 </script>
+
 
 @endsection

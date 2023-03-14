@@ -118,6 +118,7 @@ $(document).ready(function() {
             {data: 'p_name', name: 'p_name'},
             {data: 'price', name: 'price'},
             {data: 'size', name: 'size'},
+            
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ],
         order: [[ 1, 'asc' ]]
