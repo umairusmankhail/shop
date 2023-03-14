@@ -18,7 +18,6 @@
           <div class="col-sm-6">
           <a href="{{ route('product') }}"> <button type="button" class="btn btn-sm btn-primary ">Add Product</button></a>
           <a href="{{ route('import.form') }}"><button type="button" class="btn btn-sm btn-primary ">Upload Product</button></a>
-        
           <button class="btn btn-sm btn-danger" id="delete-selected">Delete Selected</button>
 
       
@@ -85,7 +84,6 @@
 <!-- ./wrapper -->
 
 
-
 @push('js')
   
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
@@ -128,11 +126,6 @@ $(document).ready(function() {
 });
 </script>
 
-
-
-
- 
- 
 <script>
     $("#checkAll").click(function () {
         var check = $('#checkAll').is(":checked");
@@ -161,10 +154,6 @@ $(document).ready(function() {
         e.preventDefault();
         $('form').submit();
     });
-</script>
-
-
-
-         
+</script>     
 @endpush
 @endsection

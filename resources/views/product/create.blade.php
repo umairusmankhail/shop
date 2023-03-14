@@ -8,7 +8,30 @@
       border-radius: 5px;
       cursor: pointer;
     }
+    label{
+    color:#636e72;   
+    font-weight: normal; 
+    }
+    .drag-area img{
+    width:100%;
+    height:100%;
+    object-fit: cover;
+    border-radius: 5px;
+    }
+  .drag-area button{
+    border: none;
+    outline: none;
+    background: #fff;
+    color: #5256ad;
+    border-radius: 5px;
+    cursor: pointer;
 
+  }
+  .drag-area{
+    width:250px;
+    height:180px;
+    overflow: hidden;
+  }
     </style>
 
 <div class="content-wrapper">
@@ -205,7 +228,7 @@ Add New Element
       <input type="text" class="form-control" id="input1" name="thickness">
     </div>
     <div class="form-group col-md-4 mb-3">
-      <label for="input2">Thickness Per Unit</label>
+      <label for="input2">Thickness\Unit</label>
       <input type="text" class="form-control" id="input2" name="thickness_unit">
     </div>
     <div class="form-group col-md-3 mb-3">
@@ -218,7 +241,10 @@ Add New Element
       <label for="textarea1">Description</label>
       <textarea class="form-control" id="textarea1" name="description" rows="4"></textarea>
     </div>
-  
+
+
+
+
 </div>
 
 
@@ -229,21 +255,44 @@ Add New Element
     <div class="form-group">
       <label for="input-files">Images</label>
       <div class="d-flex">
-        <div class="card p-5 mr-2 image-card" id="dropzone">
+      
+        <div class="card p-5 mr-2 image-card drag-area" id="dropzone">
           <label for="input-file1" class="btn btn-outline-secondary">
-            <i class="fas fa-plus fa-2x"></i><br>
-            Upload Image
-          </label>
+          <button class="fas fa-plus fa-2x drag-btn"></button><br>
+          Upload Image  
+        </label>
+          
           <input type="file" name="images[]" id="input-file1" class="d-none" onchange="handleImageUpload(this)">
         </div>
-        <div class="card p-5 mr-2 image-card" id="card-2">
+        <div class="card p-5 mr-2 image-card drag-area" id="card-2">
           <label for="input-file2" class="btn btn-outline-secondary">
-            <i class="fas fa-plus fa-2x"></i><br>
+          <button class="fas fa-plus fa-2x drag-btn"></button><br>
             Upload Image
           </label>
           <input type="file" name="images[]" id="input-file2" class="d-none" onchange="handleImageUpload(this)">
         </div>
-  
+        <div class="card p-5 mr-2 image-card" id="card-3">
+          <label for="input-file3" class="btn btn-outline-secondary">
+            <i class="fas fa-plus fa-2x"></i><br>
+            Upload Image
+          </label>
+          <input type="file" name="images[]" id="input-file3" class="d-none" onchange="handleImageUpload(this)">
+        </div>
+        <div id="image-upload">
+  <label for="file-upload">
+    <span id="upload-text">Choose an image to upload or drag it here</span>
+    <img id="uploaded-image" class="d-none img-fluid">
+    <span id="drag-file-name" class="d-none"></span>
+  </label>
+  <input type="file" id="file-upload" accept="image/*">
+</div>
+
+<div class="card mt-4 d-none" id="image-card">
+  <img class="card-img-top" id="card-image">
+  <div class="card-body">
+    <button type="button" class="btn btn-danger" id="delete-image">Delete Image</button>
+  </div>
+</div>
         <div class="card p-5 mr-2 image-card" id="card-5">
           <label for="input-file5" class="btn btn-outline-secondary">
             <i class="fas fa-plus fa-2x"></i><br>
@@ -268,29 +317,7 @@ Add New Element
 
 
 <script>
-  $(document).ready(function() {
-    // Initialize a counter to keep track of the number of added elements
-    var counter = 0;
 
-    // Add value to display and hidden inputs on "Add" button click
-    $('#addValueBtn').click(function() {
-      var value = $('#valueInput').val();
-      
-      // Generate the HTML for the label, value input, and label input
-      var labelHtml = '<label>' + value + '</label>';
-      var valueInputHtml = '<input type="text" class="form-control" name="value[]" value="" style="margin-left: 2px;">';
-      var labelInputHtml = '<input type="hidden" name="label[]" value="' + value + '">';
-
-      // Append the generated elements to the container
-      $('#valuesContainer').append('<div class="col-sm-2">' + labelHtml + valueInputHtml + labelInputHtml + '</div>');
-      counter++;
-
-      // Clear the input field and hide the modal
-      $('#valueInput').val('');
-      $('#myModal').modal('hide');
-    });
-  });
-</script>
 
 <script>
 $(document).ready(function() {
@@ -400,6 +427,62 @@ $(document).ready(function() {
     }
   });
 });
+
+//============================================================================================
+const dragAreas = document.querySelectorAll(".drag-area");
+
+dragAreas.forEach(dropArea => {
+  const dragText = dropArea.querySelector(".drag-text"),
+        button = dropArea.querySelector(".drag-btn"),
+        input = dropArea.querySelector("input");
+  let file;
+
+  button.onclick = ()=>{
+    input.click();
+  }
+
+  input.addEventListener("change", function(){
+    file = this.files[0];
+    dropArea.classList.add("active");
+    showFile();
+  });
+
+  dropArea.addEventListener("dragover", (event)=>{
+    event.preventDefault();
+    dropArea.classList.add("active");
+    dragText.textContent = "Release to Upload File";
+  });
+
+  dropArea.addEventListener("dragleave", ()=>{
+    dropArea.classList.remove("active");
+    dragText.textContent = "Drag & Drop to Upload File";
+  });
+
+  dropArea.addEventListener("drop", (event)=>{
+    event.preventDefault();
+    file = event.dataTransfer.files[0];
+    showFile();
+  });
+
+  function showFile(){
+    let fileType = file.type;
+    let validExtensions = ["image/jpeg", "image/jpg", "image/png"];
+    if(validExtensions.includes(fileType)){
+      let fileReader = new FileReader();
+      fileReader.onload = ()=>{
+        let fileURL = fileReader.result;
+        let imgTag = `<img src="${fileURL}" alt="">`;
+        dropArea.innerHTML = imgTag;
+      }
+      fileReader.readAsDataURL(file);
+    }else{
+      alert("This is not an Image File!");
+      dropArea.classList.remove("active");
+      dragText.textContent = "Drag & Drop to Upload File";
+    }
+  }
+});
+
 
 </script>
 

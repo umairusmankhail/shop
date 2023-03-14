@@ -25,7 +25,7 @@
     
             <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
+            <i class="fa-solid fa-1"></i>
               <p>
                 Category & Sub-Categories
                 <i class="fas fa-angle-left right"></i>
@@ -49,7 +49,7 @@
 
           <li class="nav-item">
             <a href="{{route('product-index')}}" class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
+            <i class="fa-solid fa-2"></i>
               <p>
                 Indiviual Product & Category Product
               </p>
@@ -58,7 +58,7 @@
 
           <li class="nav-item">
             <a href="{{route('product-index')}}" class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
+            <i class="fa-solid fa-3"></i>
               <p>
                 Inquiry Cart & Restriction Record
               </p>
@@ -67,7 +67,7 @@
 
           <li class="nav-item">
             <a href="{{route('product-index')}}" class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
+            <i class="fa-solid fa-4"></i>
               <p>
                 Inquiry Cart & Inquiry/Request A Quote
               </p>
@@ -76,7 +76,7 @@
 
           <li class="nav-item">
             <a href="{{route('product-index')}}" class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
+            <i class="fa-solid fa-5"></i>
               <p>
                 Registration & Restriction Record
               </p>
@@ -85,7 +85,7 @@
 
           <li class="nav-item">
             <a href="{{route('product-index')}}" class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
+            <i class="fa-solid fa-6"></i>
               <p>
                Slider, Privacy, Sitemap & Footer
               </p>
@@ -95,7 +95,7 @@
           
           <li class="nav-item">
             <a href="{{route('product-index')}}" class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
+            <i class="fa-solid fa-7"></i>
               <p>
                Trash Bin
               </p>
